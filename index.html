@@ -1,0 +1,3015 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CravePulse 360 | Fast & Fresh Gourmet Food Delivery</title>
+  <meta name="description" content="Order fresh handcrafted pizzas, gourmet smash burgers, biryanis, desserts and drinks with live doorstep order tracking and realistic unboxing preview.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <link rel="stylesheet" href="styles.css?v=21.0">
+</head>
+<body>
+  <!-- Canvas Confetti Container -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Top Floating Capsule Announcement Bar -->
+  <div class="top-announcement-bar-wrapper">
+    <div class="top-announcement-bar">
+      <div class="announcement-content">
+        <span class="announcement-deal-tag">
+          <i class="fa-solid fa-bolt deal-bolt"></i> <strong>50% OFF</strong>
+        </span>
+        <span class="announcement-sep">|</span>
+        <span class="announcement-promo">
+          Use code <strong class="promo-code-capsule" onclick="applyPromoCode('CRAVE50')" title="Click to copy CRAVE50">CRAVE50</strong>
+        </span>
+        <span class="announcement-sep">|</span>
+        <span class="announcement-delivery">
+          <i class="fa-solid fa-truck-fast"></i> Average delivery: <strong>18 min</strong>
+        </span>
+      </div>
+      <div class="announcement-controls">
+        <button class="audio-toggle-btn" id="soundToggleBtn" title="Toggle Sound Effects">
+          <i class="fa-solid fa-volume-high"></i> <span id="soundStatusText">Sound On</span>
+        </button>
+        <span class="announcement-sep">|</span>
+        <button class="theme-toggle-btn" id="themeToggleBtn" title="Toggle Light/Dark Theme">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Primary Navigation Header -->
+  <header class="main-navbar">
+    <div class="nav-container">
+      <!-- Left: Logo & Tagline -->
+      <div class="logo-container" onclick="switchRole('customer')">
+        <div class="cp-logo-emblem">
+          <svg viewBox="0 0 120 120" class="cp-svg-logo" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="cpGradMain" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#F43F5E" />
+                <stop offset="25%" stop-color="#EC4899" />
+                <stop offset="55%" stop-color="#7C3AED" />
+                <stop offset="80%" stop-color="#3B82F6" />
+                <stop offset="100%" stop-color="#06B6D4" />
+              </linearGradient>
+              <linearGradient id="cpGradGlow" x1="0%" y1="100%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#FB7185" />
+                <stop offset="50%" stop-color="#A855F7" />
+                <stop offset="100%" stop-color="#38BDF8" />
+              </linearGradient>
+              <filter id="logoShadow" x="-30%" y="-30%" width="160%" height="160%">
+                <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#7C3AED" flood-opacity="0.4" />
+              </filter>
+            </defs>
+
+            <!-- Planetary Orbital Halo Ring -->
+            <ellipse cx="60" cy="60" rx="54" ry="22" fill="none" stroke="url(#cpGradGlow)" stroke-width="3.5" transform="rotate(-26 60 60)" opacity="0.9" />
+            
+            <!-- Sparkles and satellites -->
+            <circle cx="106" cy="36" r="3" fill="#38BDF8" />
+            <circle cx="14" cy="84" r="2.5" fill="#F43F5E" />
+            <!-- 4-point sparkle star -->
+            <path d="M 108 20 Q 108 25 113 25 Q 108 25 108 30 Q 108 25 103 25 Q 108 25 108 20 Z" fill="#F472B6" />
+            <path d="M 16 38 Q 16 41 19 41 Q 16 41 16 44 Q 16 41 13 41 Q 16 41 16 38 Z" fill="#38BDF8" />
+
+            <!-- CP Monogram Group with Shadow -->
+            <g filter="url(#logoShadow)">
+              <!-- C Letter (Curved 3D Ribbon) -->
+              <path d="M 52 30 C 32 30 20 42 20 60 C 20 78 32 90 52 90 C 58 90 64 88 68 85 L 64 74 C 61 76 57 78 52 78 C 39 78 32 70 32 60 C 32 50 39 42 52 42 C 57 42 61 44 64 46 L 68 35 C 64 32 58 30 52 30 Z" fill="url(#cpGradMain)" />
+
+              <!-- P Letter (Overlapping Bold Stem & Bowl) -->
+              <path d="M 56 26 L 56 92 C 56 92 68 92 68 74 L 80 74 C 95 74 102 63 102 50 C 102 37 95 26 80 26 Z" fill="url(#cpGradMain)" />
+              
+              <!-- Inner Bowl of P (Negative Space) -->
+              <path d="M 68 37 L 78 37 C 86 37 90 42 90 50 C 90 58 86 63 78 63 L 68 63 Z" fill="#FFFFFF" />
+
+              <!-- Sleek Fork Icon inside P bowl -->
+              <g transform="translate(73, 40) scale(0.65)">
+                <!-- Fork Handle -->
+                <rect x="7" y="14" width="3" height="15" rx="1.5" fill="#4F46E5" />
+                <!-- Fork Neck -->
+                <path d="M 4 8 C 4 12 7 14 8.5 14 C 10 14 13 12 13 8 Z" fill="#4F46E5" />
+                <!-- 3 Fork Prongs -->
+                <rect x="4" y="0" width="2" height="9" rx="1" fill="#4F46E5" />
+                <rect x="7.5" y="0" width="2" height="9" rx="1" fill="#4F46E5" />
+                <rect x="11" y="0" width="2" height="9" rx="1" fill="#4F46E5" />
+              </g>
+
+              <!-- Glossy 3D Highlight Curve -->
+              <path d="M 24 54 C 24 44 32 34 46 32 C 43 35 34 41 33 54 Z" fill="#FFFFFF" opacity="0.6" />
+              <path d="M 60 28 L 78 28 C 88 28 94 33 97 40 C 93 33 86 30 76 30 L 60 30 Z" fill="#FFFFFF" opacity="0.5" />
+            </g>
+          </svg>
+        </div>
+        <div class="logo-text-group">
+          <div class="brand-title">
+            <span class="brand-crave">CRAVE</span>
+            <span class="brand-pulse">PULSE</span>
+            <span class="brand-badge-360">360</span>
+          </div>
+          <div class="brand-subtitle">
+            The Pulse of Your Cravings. Delivered at <span class="tagline-speed">Full Speed ⚡</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Center: Role Switcher (View: Food | Kitchen • Live | Tracking) -->
+      <div class="role-switcher-container">
+        <span class="role-switcher-label">View:</span>
+        <div class="role-pills">
+          <button class="role-pill active" data-role="customer" onclick="switchRole('customer')">
+            <i class="fa-solid fa-utensils"></i> <span>Food</span>
+          </button>
+          <button class="role-pill" data-role="kds" id="kdsRoleNavBtn" onclick="switchRole('kds')" title="Restricted to Kitchen Staff & Owners">
+            <i class="fa-solid fa-kitchen-set"></i> <span>Kitchen</span> <span class="live-pulse-badge">• Live</span>
+            <span class="kds-badge" id="kdsBadgeCount" style="display:none;">0</span>
+            <i class="fa-solid fa-lock text-warning" id="kdsLockNavIcon" style="display:none;" title="Owner PIN Protected"></i>
+          </button>
+          <button class="role-pill" data-role="fleet" onclick="switchRole('fleet')">
+            <i class="fa-solid fa-bicycle"></i> <span>Tracking</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Right: Deliver To & Basket Button -->
+      <div class="nav-actions">
+        <div class="delivery-location-pill" onclick="openLocationModal()">
+          <div class="loc-pin-wrap">
+            <i class="fa-solid fa-location-dot"></i>
+          </div>
+          <div class="loc-details">
+            <span class="loc-tag">Deliver to:</span>
+            <strong class="loc-name">
+              <span id="currentLocationLabel">Campus Tech Hub</span>
+              <i class="fa-solid fa-chevron-down loc-arrow"></i>
+            </strong>
+            <span class="loc-sub">Tower 4 · <span class="loc-change-link">Change</span></span>
+          </div>
+        </div>
+
+        <button class="cart-btn" id="cartDrawerOpenBtn" onclick="toggleCartDrawer(true)">
+          <div class="cart-icon-wrapper">
+            <i class="fa-solid fa-bag-shopping"></i>
+            <span class="cart-count-badge" id="navCartCount">0</span>
+          </div>
+          <div class="cart-btn-info">
+            <span class="cart-btn-label">Basket</span>
+            <span class="cart-btn-total"><span id="navCartItemLabel">0 items</span> · <span id="navCartTotal">₹0</span></span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- 1. CUSTOMER PORTAL VIEW                                                   -->
+  <!-- ========================================================================= -->
+  <main class="portal-view active" id="customerPortalView">
+    
+    <!-- Hero / Live Promo Section -->
+    <section class="hero-banner-section">
+      <div class="hero-bg-glow"></div>
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span>🔥</span> YOU CRAVE. WE MOVE.
+        </div>
+        <h1 class="hero-title">
+          Cravings don't wait. <br>
+          <span class="gradient-text">Neither do we.</span>
+        </h1>
+        <p class="hero-desc">
+          Pizza. Burgers. Biryani. Desserts. Whatever your mood demands, CRAVE PULSE gets it from “I want it” to “it’s here.” The Pulse of Your Cravings. Delivered at Full Speed.
+        </p>
+
+        <!-- Search & Filter Bar -->
+        <div class="search-hero-box">
+          <div class="search-input-wrapper">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="foodSearchInput" placeholder="Search pizza, burger, biryani, matcha, pasta, waffle (30+ options)..." oninput="handleSearchInput(event)" onkeydown="handleSearchKeyDown(event)" autocomplete="off">
+            <button class="clear-search-btn" id="clearSearchBtn" onclick="clearSearch()" style="display: none;">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+            <button class="btn-search-trigger-pill" onclick="triggerSearchExplorer()" title="Explore 30+ handcrafted variations">
+              <i class="fa-solid fa-wand-magic-sparkles"></i> Explore
+            </button>
+
+            <!-- Live Autocomplete & Instant Match Suggestions -->
+            <div class="live-search-suggestions" id="liveSearchSuggestions" style="display: none;">
+              <!-- Populated dynamically by app.js -->
+            </div>
+          </div>
+
+          <div class="hero-quick-filters">
+            <button class="quick-filter-chip active" data-filter="all" onclick="filterMenu('all', this)">All Cravings</button>
+            <button class="quick-filter-chip" data-filter="veg" onclick="filterMenu('veg', this)"><span class="diet-dot veg"></span> Pure Veg</button>
+            <button class="quick-filter-chip" data-filter="non-veg" onclick="filterMenu('non-veg', this)"><span class="diet-dot non-veg"></span> Non-Veg</button>
+            <button class="quick-filter-chip" data-filter="bestseller" onclick="filterMenu('bestseller', this)">⭐ Bestsellers</button>
+            <button class="quick-filter-chip" data-filter="customizable" onclick="filterMenu('customizable', this)">🎨 Custom Maker</button>
+          </div>
+
+          <!-- Instant Trending Food Explorer Tags -->
+          <div class="hero-trending-row">
+            <span class="trending-label"><i class="fa-solid fa-arrow-trend-up text-primary"></i> Trending:</span>
+            <span class="trend-tag" onclick="openDishExplorer('Truffle Burger')">🍔 Truffle Burger</span>
+            <span class="trend-tag" onclick="openDishExplorer('Dum Biryani')">🍛 Dum Biryani</span>
+            <span class="trend-tag" onclick="openDishExplorer('Sourdough Pizza')">🍕 Sourdough Pizza</span>
+            <span class="trend-tag" onclick="openDishExplorer('Belgian Waffle')">🧇 Belgian Waffle</span>
+            <span class="trend-tag" onclick="openDishExplorer('Matcha')">🍵 Iced Matcha</span>
+            <span class="trend-tag" onclick="openDishExplorer('Pasta')">🍝 Truffle Pasta</span>
+            <span class="trend-tag" onclick="openDishExplorer('Ramen')">🍜 Tokyo Ramen</span>
+            <span class="trend-tag" onclick="openDishExplorer('Tacos')">🌮 Street Tacos</span>
+          </div>
+        </div>
+
+        <!-- Hero Highlights Stats Bar -->
+        <div class="hero-stats-row">
+          <div class="hero-stat-pill">
+            <span class="stat-icon">⭐</span>
+            <div class="stat-text">
+              <strong>4.9 / 5</strong>
+              <span>25,000+ Reviews</span>
+            </div>
+          </div>
+          <div class="hero-stat-pill">
+            <span class="stat-icon">⚡</span>
+            <div class="stat-text">
+              <strong>15-Min Delivery</strong>
+              <span>Always Hot & Fresh</span>
+            </div>
+          </div>
+          <div class="hero-stat-pill">
+            <span class="stat-icon">🌿</span>
+            <div class="stat-text">
+              <strong>100% Fresh</strong>
+              <span>Artisanal Ingredients</span>
+            </div>
+          </div>
+          <div class="hero-stat-pill">
+            <span class="stat-icon">📦</span>
+            <div class="stat-text">
+              <strong>Spill-Proof</strong>
+              <span>Thermal Sealed Box</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Hyper-Realistic Custom Meal Studio Showcase -->
+      <div class="hero-customizer-showcase" id="heroCustomizerShowcase">
+        <div class="studio-top-pills">
+          <span class="studio-badge"><i class="fa-solid fa-wand-magic-sparkles text-accent"></i> 3D CULINARY STUDIO</span>
+          <span class="studio-live-tag"><span class="pulse-dot"></span> Real-Time Macro & Price</span>
+        </div>
+
+        <!-- Interactive Food Category Switcher -->
+        <div class="hero-studio-tabs">
+          <button class="hero-studio-tab active" id="heroStudioTab_burger" onclick="switchHeroStudioDish('burger', this)">🍔 Smash Burger</button>
+          <button class="hero-studio-tab" id="heroStudioTab_pizza" onclick="switchHeroStudioDish('pizza', this)">🍕 Sourdough Pizza</button>
+          <button class="hero-studio-tab" id="heroStudioTab_biryani" onclick="switchHeroStudioDish('biryani', this)">🍲 Dum Biryani</button>
+          <button class="hero-studio-tab" id="heroStudioTab_waffle" onclick="switchHeroStudioDish('waffle', this)">🧇 Belgian Waffle</button>
+        </div>
+
+        <!-- Real Food Visual Hero Stacker -->
+        <div class="hero-studio-visual-wrap" onclick="openDishCustomizer(APP_STATE.heroStudioDish || 'burger')">
+          <div class="hero-studio-img-box">
+            <img id="heroStudioDishImg" src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80" alt="Custom Dish Preview" class="hero-studio-img">
+            <div class="studio-steam-effect"></div>
+            <span class="studio-photo-real-badge"><i class="fa-solid fa-camera"></i> 100% Real Food Studio</span>
+          </div>
+          
+          <div class="hero-studio-floating-specs">
+            <span class="spec-bubble" id="heroStudioCalorie"><i class="fa-solid fa-fire text-warning"></i> 640 kcal</span>
+            <span class="spec-bubble" id="heroStudioProtein"><i class="fa-solid fa-dumbbell text-emerald"></i> 36g Protein</span>
+            <span class="spec-bubble" id="heroStudioPrice"><i class="fa-solid fa-tag text-primary"></i> ₹329</span>
+          </div>
+        </div>
+
+        <div class="hero-studio-info">
+          <h3 id="heroStudioDishTitle">Craft Your Ultimate Smash Burger</h3>
+          <p id="heroStudioDishDesc">Pick toasted brioche, Angus smash patties, molten aged cheddar & truffle aioli with live nutrition calculations!</p>
+          <button class="btn-builder-glow" onclick="openDishCustomizer(APP_STATE.heroStudioDish || 'burger')">
+            <i class="fa-solid fa-sliders"></i> Open 3D Ingredient Studio
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SMART FOOD DISCOVERY SHOWCASE SECTION (IMAGE 2 DITTO SPECIFICATION)       -->
+    <!-- ========================================================================= -->
+    <section class="smart-discovery-showcase-section">
+      <div class="smart-discovery-container">
+        <div class="hero-ml-features-banner">
+          <!-- Ambient Decorative Background Glows & Dots -->
+          <div class="showcase-ambient-glow top-right"></div>
+          <div class="showcase-ambient-glow bottom-left"></div>
+          <div class="showcase-dots-pattern"></div>
+
+          <!-- Top Row: Badge, Main Title, Subtitle, & Right Mini Brand Badge -->
+          <div class="showcase-top-header-grid">
+            <div class="showcase-title-block">
+              <span class="ml-badge-pill"><i class="fa-solid fa-sparkles text-white"></i> SMART FOOD DISCOVERY</span>
+              <h2 class="showcase-main-heading">
+                Your <span class="highlight-blue">mood.</span> Your <span class="highlight-cyan">food.</span> Your <span class="highlight-purple">perfect pick.</span>
+              </h2>
+              <p class="showcase-sub-tagline">
+                Tell us what you're craving or scan a dish to discover nutrition, calories and order instantly.
+              </p>
+            </div>
+
+            <div class="showcase-brand-watermark">
+              <div class="showcase-brand-row">
+                <div class="showcase-mini-logo">
+                  <svg viewBox="0 0 100 100" class="mini-cp-svg" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="50" cy="50" rx="44" ry="18" fill="none" stroke="url(#ringGradMini)" stroke-width="3" transform="rotate(-28 50 50)" />
+                    <path d="M 44 26 C 28 26 18 36 18 50 C 18 64 28 74 44 74 C 49 74 53 72.5 56 70 C 56 70 52 63 45 64 C 36 65 30 58 30 50 C 30 42 36 35 45 36 C 52 37 56 30 56 30 C 53 27.5 49 26 44 26 Z" fill="url(#cpGradMini)" />
+                    <path d="M 48 24 L 48 76 C 48 76 58 76 58 60 L 68 60 C 80 60 84 51 84 42 C 84 33 80 24 68 24 Z" fill="url(#cpGradMini)" />
+                    <defs>
+                      <linearGradient id="cpGradMini" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#F43F5E" />
+                        <stop offset="50%" stop-color="#7C3AED" />
+                        <stop offset="100%" stop-color="#38BDF8" />
+                      </linearGradient>
+                      <linearGradient id="ringGradMini" x1="0%" y1="100%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#EC4899" />
+                        <stop offset="100%" stop-color="#38BDF8" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+                <div class="showcase-brand-text">
+                  <div class="showcase-brand-name"><span class="brand-crave">CRAVE</span> <span class="brand-pulse">PULSE</span> <span class="brand-badge-360">360</span></div>
+                  <div class="showcase-brand-speed">The Pulse of Your Cravings. Delivered at <em>Full Speed ⚡</em></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive Craving Engine Pipeline (Flow Diagram) -->
+          <div class="showcase-flow-pipeline">
+            <div class="flow-node you-node">
+              <div class="flow-icon-circle"><i class="fa-solid fa-user"></i></div>
+              <span class="flow-node-label">YOU</span>
+            </div>
+
+            <!-- Connecting Soundwave Pulse Line Left -->
+            <div class="flow-wave-wrap">
+              <svg class="flow-wave-svg" viewBox="0 0 70 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M 2 10 L 16 10 L 22 3 L 28 17 L 34 5 L 40 15 L 46 8 L 52 12 L 68 10" stroke="url(#waveGradL)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                <defs>
+                  <linearGradient id="waveGradL" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#818CF8" />
+                    <stop offset="50%" stop-color="#C084FC" />
+                    <stop offset="100%" stop-color="#EC4899" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+
+            <!-- Center Glowing Engine Capsule (Zero AI terminology) -->
+            <div class="flow-engine-capsule" onclick="openMlMoodModal()">
+              <div class="engine-pill-btn">
+                <span>PULSE MATCHER</span> <i class="fa-solid fa-sparkles"></i>
+              </div>
+              <span class="engine-status-text">Reading your craving...</span>
+            </div>
+
+            <!-- Connecting Soundwave Pulse Line Right -->
+            <div class="flow-wave-wrap">
+              <svg class="flow-wave-svg" viewBox="0 0 70 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M 2 10 L 16 10 L 22 17 L 28 3 L 34 15 L 40 5 L 46 12 L 52 8 L 68 10" stroke="url(#waveGradR)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                <defs>
+                  <linearGradient id="waveGradR" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#EC4899" />
+                    <stop offset="50%" stop-color="#818CF8" />
+                    <stop offset="100%" stop-color="#38BDF8" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+
+            <div class="flow-node food-node">
+              <div class="flow-icon-circle cloche-circle"><i class="fa-solid fa-bell-concierge"></i></div>
+              <span class="flow-node-label">PERFECT FOOD</span>
+            </div>
+          </div>
+
+          <!-- Two Main Hero Action Cards -->
+          <div class="showcase-feature-cards-grid">
+            <!-- Card 1: Food Mood Matcher -->
+            <div class="showcase-hero-card mood-hero-card" onclick="openMlMoodModal()">
+              <div class="hero-card-illustration">
+                <svg viewBox="0 0 140 140" class="mood-orb-svg" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <radialGradient id="orbGrad" cx="35%" cy="35%" r="65%">
+                      <stop offset="0%" stop-color="#D8B4FE" />
+                      <stop offset="40%" stop-color="#8B5CF6" />
+                      <stop offset="85%" stop-color="#4F46E5" />
+                      <stop offset="100%" stop-color="#1E1B4B" />
+                    </radialGradient>
+                    <linearGradient id="orbRing" x1="0%" y1="100%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#EC4899" />
+                      <stop offset="50%" stop-color="#A855F7" />
+                      <stop offset="100%" stop-color="#38BDF8" />
+                    </linearGradient>
+                    <radialGradient id="heartGrad" cx="30%" cy="30%" r="70%">
+                      <stop offset="0%" stop-color="#F472B6" />
+                      <stop offset="60%" stop-color="#EC4899" />
+                      <stop offset="100%" stop-color="#9333EA" />
+                    </radialGradient>
+                    <filter id="orbGlow" x="-20%" y="-20%" width="140%" height="140%">
+                      <feGaussianBlur stdDeviation="3" result="blur" />
+                      <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                  </defs>
+
+                  <!-- Orbital Ring -->
+                  <ellipse cx="70" cy="70" rx="58" ry="22" fill="none" stroke="url(#orbRing)" stroke-width="3" transform="rotate(-25 70 70)" filter="url(#orbGlow)" />
+                  <circle cx="120" cy="45" r="3" fill="#38BDF8" />
+                  <circle cx="20" cy="95" r="2.5" fill="#EC4899" />
+                  <path d="M 122 28 Q 122 32 126 32 Q 122 32 122 36 Q 122 32 118 32 Q 122 32 122 28 Z" fill="#F472B6" />
+                  <path d="M 18 42 Q 18 45 21 45 Q 18 45 18 48 Q 18 45 15 45 Q 18 45 18 42 Z" fill="#38BDF8" />
+
+                  <!-- Main 3D Sphere Orb -->
+                  <circle cx="70" cy="70" r="40" fill="url(#orbGrad)" filter="url(#orbGlow)" />
+                  <ellipse cx="58" cy="50" rx="16" ry="9" fill="#FFFFFF" opacity="0.45" transform="rotate(-30 58 50)" />
+                  <circle cx="82" cy="85" r="4" fill="#FFFFFF" opacity="0.3" />
+
+                  <!-- Smiley Face -->
+                  <circle cx="58" cy="68" r="4" fill="#FFFFFF" />
+                  <circle cx="82" cy="68" r="4" fill="#FFFFFF" />
+                  <path d="M 56 78 Q 70 90 84 78" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" />
+
+                  <!-- Floating 3D Heart -->
+                  <g transform="translate(90, 80) scale(0.9)" filter="url(#orbGlow)">
+                    <path d="M 12 4 C 12 1.5 9.5 0 7 0 C 4.5 0 2 2 2 5 C 2 9 7 13 12 18 C 17 13 22 9 22 5 C 22 2 19.5 0 17 0 C 14.5 0 12 1.5 12 4 Z" fill="url(#heartGrad)" />
+                    <ellipse cx="6" cy="4" rx="2" ry="1" fill="#FFFFFF" opacity="0.6" />
+                  </g>
+                </svg>
+              </div>
+              <div class="hero-card-details">
+                <h3 class="hero-card-title">Food Mood Matcher</h3>
+                <p class="hero-card-desc">Tell us how you're feeling and we'll find your perfect craving.</p>
+                <button type="button" class="btn-hero-card-action mood-btn" onclick="event.stopPropagation(); openMlMoodModal()">Find My Craving →</button>
+              </div>
+            </div>
+
+            <!-- Card 2: Food Photo Scanner -->
+            <div class="showcase-hero-card scanner-hero-card" onclick="openMlPhotoModal()">
+              <div class="hero-card-illustration">
+                <svg viewBox="0 0 140 140" class="scanner-orb-svg" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <radialGradient id="camBgGrad" cx="40%" cy="40%" r="65%">
+                      <stop offset="0%" stop-color="#38BDF8" />
+                      <stop offset="45%" stop-color="#2563EB" />
+                      <stop offset="85%" stop-color="#4F46E5" />
+                      <stop offset="100%" stop-color="#1E1B4B" />
+                    </radialGradient>
+                    <linearGradient id="bracketGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#38BDF8" />
+                      <stop offset="100%" stop-color="#818CF8" />
+                    </linearGradient>
+                    <filter id="camGlow" x="-20%" y="-20%" width="140%" height="140%">
+                      <feGaussianBlur stdDeviation="3" result="blur" />
+                      <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                  </defs>
+
+                  <!-- Viewfinder Outer Brackets -->
+                  <path d="M 24 38 L 24 24 L 38 24" fill="none" stroke="url(#bracketGrad)" stroke-width="3.5" stroke-linecap="round" />
+                  <path d="M 116 38 L 116 24 L 102 24" fill="none" stroke="url(#bracketGrad)" stroke-width="3.5" stroke-linecap="round" />
+                  <path d="M 24 102 L 24 116 L 38 116" fill="none" stroke="url(#bracketGrad)" stroke-width="3.5" stroke-linecap="round" />
+                  <path d="M 116 102 L 116 116 L 102 116" fill="none" stroke="url(#bracketGrad)" stroke-width="3.5" stroke-linecap="round" />
+
+                  <!-- Sparkles -->
+                  <path d="M 120 48 Q 120 52 124 52 Q 120 52 120 56 Q 120 52 116 52 Q 120 52 120 48 Z" fill="#38BDF8" />
+                  <path d="M 18 88 Q 18 91 21 91 Q 18 91 18 94 Q 18 91 15 91 Q 18 91 18 88 Z" fill="#818CF8" />
+
+                  <!-- Main Camera Body Squircle -->
+                  <rect x="32" y="36" width="76" height="68" rx="22" fill="url(#camBgGrad)" filter="url(#camGlow)" />
+                  <path d="M 52 36 L 56 30 L 84 30 L 88 36 Z" fill="url(#camBgGrad)" />
+                  <circle cx="82" cy="46" r="3.5" fill="#38BDF8" />
+
+                  <!-- Lens Core -->
+                  <circle cx="70" cy="70" r="22" fill="#1E1B4B" stroke="#60A5FA" stroke-width="2.5" />
+                  <circle cx="70" cy="70" r="16" fill="#0F172A" />
+                  <circle cx="70" cy="70" r="11" fill="url(#camBgGrad)" />
+                  <ellipse cx="65" cy="65" rx="5" ry="3" fill="#FFFFFF" opacity="0.75" transform="rotate(-30 65 65)" />
+
+                  <!-- Floating Food Bowl Badge on bottom right -->
+                  <g transform="translate(86, 78)" filter="url(#camGlow)">
+                    <rect x="0" y="0" width="36" height="36" rx="10" fill="#FFFFFF" stroke="#818CF8" stroke-width="1.5" />
+                    <path d="M 8 20 C 8 26 13 30 18 30 C 23 30 28 26 28 20 Z" fill="#F59E0B" />
+                    <path d="M 6 18 L 30 18 C 30 16 28 12 24 10 C 20 12 16 10 12 10 C 8 12 6 16 6 18 Z" fill="#10B981" />
+                    <path d="M 14 8 C 14 6 16 6 18 4 M 20 8 C 20 6 22 6 24 4" stroke="#FB7185" stroke-width="1.5" stroke-linecap="round" fill="none" />
+                  </g>
+                </svg>
+              </div>
+              <div class="hero-card-details">
+                <h3 class="hero-card-title">Food Photo Scanner</h3>
+                <p class="hero-card-desc">Scan any dish to understand it instantly before you order.</p>
+                <button type="button" class="btn-hero-card-action scanner-btn" onclick="event.stopPropagation(); openMlPhotoModal()">Scan Food →</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Row: Quick Cravings Header & 6 Interactive Craving Cards -->
+          <div class="showcase-cravings-footer-row">
+            <div class="cravings-footer-header">
+              <div class="cravings-label-badge"><i class="fa-solid fa-bolt text-primary"></i> <strong>Quick Cravings</strong></div>
+              <div class="cravings-gradient-line"></div>
+            </div>
+
+            <div class="cravings-cards-carousel">
+              <!-- 1. Comfort -->
+              <div class="craving-bubble-card pink-bubble" onclick="openMlMoodWithQuery('Feeling down need chocolate dopamine comfort lava cake and waffles')">
+                <div class="craving-bubble-icon">💔</div>
+                <div class="craving-bubble-text">
+                  <strong class="craving-mood-name">Comfort</strong>
+                  <span class="craving-dish-hint">Lava Cake</span>
+                </div>
+                <i class="fa-solid fa-chevron-right bubble-arrow"></i>
+              </div>
+
+              <!-- 2. Rainy Day -->
+              <div class="craving-bubble-card blue-bubble" onclick="openMlMoodWithQuery('Rainy cozy evening craving something spicy, cheesy and piping hot pizza')">
+                <div class="craving-bubble-icon">🌧️</div>
+                <div class="craving-bubble-text">
+                  <strong class="craving-mood-name">Rainy Day</strong>
+                  <span class="craving-dish-hint">Pizza</span>
+                </div>
+                <i class="fa-solid fa-chevron-right bubble-arrow"></i>
+              </div>
+
+              <!-- 3. Late Night -->
+              <div class="craving-bubble-card purple-bubble" onclick="openMlMoodWithQuery('Late night study session sweet treat with chocolate and rich coffee')">
+                <div class="craving-bubble-icon">🌙</div>
+                <div class="craving-bubble-text">
+                  <strong class="craving-mood-name">Late Night</strong>
+                  <span class="craving-dish-hint">Coffee & Treat</span>
+                </div>
+                <i class="fa-solid fa-chevron-right bubble-arrow"></i>
+              </div>
+
+              <!-- 4. Sweet -->
+              <div class="craving-bubble-card amber-bubble" onclick="openMlMoodWithQuery('Craving sweet comfort food with molten chocolate and waffles')">
+                <div class="craving-bubble-icon">🍫</div>
+                <div class="craving-bubble-text">
+                  <strong class="craving-mood-name">Sweet</strong>
+                  <span class="craving-dish-hint">Waffles</span>
+                </div>
+                <i class="fa-solid fa-chevron-right bubble-arrow"></i>
+              </div>
+
+              <!-- 5. High Protein -->
+              <div class="craving-bubble-card green-bubble" onclick="openMlMoodWithQuery('Post-workout high protein low carb healthy fuel meal with grilled chicken or paneer')">
+                <div class="craving-bubble-icon">💪</div>
+                <div class="craving-bubble-text">
+                  <strong class="craving-mood-name">High Protein</strong>
+                  <span class="craving-dish-hint">Protein Bowl</span>
+                </div>
+                <i class="fa-solid fa-chevron-right bubble-arrow"></i>
+              </div>
+
+              <!-- 6. Spicy -->
+              <div class="craving-bubble-card red-bubble" onclick="openMlMoodWithQuery('Extra spicy aromatic Paneer Tikka or spicy Dum Biryani')">
+                <div class="craving-bubble-icon">🌶️</div>
+                <div class="craving-bubble-text">
+                  <strong class="craving-mood-name">Spicy</strong>
+                  <span class="craving-dish-hint">Paneer Tikka</span>
+                </div>
+                <i class="fa-solid fa-chevron-right bubble-arrow"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Craving Mood Selector Bar -->
+    <section class="mood-selector-section">
+      <div class="mood-container">
+        <div class="mood-header">
+          <span class="mood-eyebrow">✨ TASTE COMPASS</span>
+          <h3 class="mood-title">What are you in the mood for today?</h3>
+        </div>
+        <div class="mood-chips-row">
+          <button class="mood-chip active" onclick="filterByMood('all', this)">
+            <span class="mood-emoji">🌈</span>
+            <span class="mood-name">All Cravings</span>
+          </button>
+          <button class="mood-chip" onclick="filterByMood('cheesy', this)">
+            <span class="mood-emoji">🧀</span>
+            <span class="mood-name">Cheesy Comfort</span>
+          </button>
+          <button class="mood-chip" onclick="filterByMood('spicy', this)">
+            <span class="mood-emoji">🌶️</span>
+            <span class="mood-name">Spicy & Sizzling</span>
+          </button>
+          <button class="mood-chip" onclick="filterByMood('healthy', this)">
+            <span class="mood-emoji">🥗</span>
+            <span class="mood-name">Fit & High-Protein</span>
+          </button>
+          <button class="mood-chip" onclick="filterByMood('sweet', this)">
+            <span class="mood-emoji">🍰</span>
+            <span class="mood-name">Sweet Tooth</span>
+          </button>
+          <button class="mood-chip" onclick="filterByMood('latenight', this)">
+            <span class="mood-emoji">🌙</span>
+            <span class="mood-name">Late Night Munchies</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chef's Curated Tasting Combos Section -->
+    <section class="combos-section">
+      <div class="section-header flex-between">
+        <div>
+          <div class="section-tag-pill">🔥 CHEF'S SPECIAL COMBOS</div>
+          <h2 class="section-title">Curated Gourmet Feast Bundles</h2>
+          <p class="section-subtitle">Specially paired meals with up to 25% instant savings</p>
+        </div>
+        <div class="combos-badge">
+          <i class="fa-solid fa-gift text-primary"></i> Free dessert included in all combos!
+        </div>
+      </div>
+
+      <div class="combos-grid">
+        <!-- Combo Card 1 -->
+        <div class="combo-card">
+          <div class="combo-badge-save">SAVE 22%</div>
+          <div class="combo-img-wrap">
+            <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&auto=format&fit=crop&q=80" alt="Midnight Smash Burger Combo" class="combo-img">
+            <div class="combo-rating-tag"><i class="fa-solid fa-star"></i> 4.9 (4.2k)</div>
+          </div>
+          <div class="combo-body">
+            <h3 class="combo-title">The Midnight Chill Feast</h3>
+            <p class="combo-desc">Double Truffle Smash Burger + Crispy Peri-Peri Fries + Cold Brew Iced Frappe + Molten Choco Cake</p>
+            <div class="combo-items-pills">
+              <span>🍔 Double Smash</span>
+              <span>🍟 Peri Fries</span>
+              <span>🥤 Cold Brew</span>
+              <span>🍫 Choco Cake</span>
+            </div>
+            <div class="combo-footer">
+              <div class="combo-price-group">
+                <span class="combo-price">₹389</span>
+                <span class="combo-original-price">₹499</span>
+              </div>
+              <button class="btn-add-combo" onclick="addComboToCart('The Midnight Chill Feast', 389, 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&auto=format&fit=crop&q=80')">
+                <i class="fa-solid fa-plus"></i> Add Combo
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Combo Card 2 -->
+        <div class="combo-card">
+          <div class="combo-badge-save">SAVE 25%</div>
+          <div class="combo-img-wrap">
+            <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600&auto=format&fit=crop&q=80" alt="Royal Nawabi Biryani Combo" class="combo-img">
+            <div class="combo-rating-tag"><i class="fa-solid fa-star"></i> 4.95 (5.1k)</div>
+          </div>
+          <div class="combo-body">
+            <h3 class="combo-title">Royal Nawabi Handi Feast</h3>
+            <p class="combo-desc">Dum Handi Biryani + 2 Garlic Butter Naans + Rich Mirchi Salan + Chilled Fresh Lime + Warm Gulab Jamun</p>
+            <div class="combo-items-pills">
+              <span>🍛 Dum Biryani</span>
+              <span>🫓 Garlic Naan</span>
+              <span>🥤 Fresh Lime</span>
+              <span>🍯 Gulab Jamun</span>
+            </div>
+            <div class="combo-footer">
+              <div class="combo-price-group">
+                <span class="combo-price">₹449</span>
+                <span class="combo-original-price">₹599</span>
+              </div>
+              <button class="btn-add-combo" onclick="addComboToCart('Royal Nawabi Handi Feast', 449, 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600&auto=format&fit=crop&q=80')">
+                <i class="fa-solid fa-plus"></i> Add Combo
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Combo Card 3 -->
+        <div class="combo-card">
+          <div class="combo-badge-save">SAVE 20%</div>
+          <div class="combo-img-wrap">
+            <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&auto=format&fit=crop&q=80" alt="Italian Gourmet Sourdough Combo" class="combo-img">
+            <div class="combo-rating-tag"><i class="fa-solid fa-star"></i> 4.88 (3.9k)</div>
+          </div>
+          <div class="combo-body">
+            <h3 class="combo-title">Italian Trattoria Date Night</h3>
+            <p class="combo-desc">Wild Truffle Sourdough Pizza (10") + Creamy Truffle Penne Pasta + Cheesy Pull-Apart Garlic Bread + Tiramisu</p>
+            <div class="combo-items-pills">
+              <span>🍕 Truffle Pizza</span>
+              <span>🍝 Pink Penne</span>
+              <span>🥖 Garlic Bread</span>
+              <span>☕ Tiramisu</span>
+            </div>
+            <div class="combo-footer">
+              <div class="combo-price-group">
+                <span class="combo-price">₹499</span>
+                <span class="combo-original-price">₹620</span>
+              </div>
+              <button class="btn-add-combo" onclick="addComboToCart('Italian Trattoria Date Night', 499, 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&auto=format&fit=crop&q=80')">
+                <i class="fa-solid fa-plus"></i> Add Combo
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Combo Card 4 -->
+        <div class="combo-card">
+          <div class="combo-badge-save">SAVE 24%</div>
+          <div class="combo-img-wrap">
+            <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600&auto=format&fit=crop&q=80" alt="Sweet Euphoria Platter" class="combo-img">
+            <div class="combo-rating-tag"><i class="fa-solid fa-star"></i> 4.96 (6.2k)</div>
+          </div>
+          <div class="combo-body">
+            <h3 class="combo-title">Sweet Euphoria Dessert Box</h3>
+            <p class="combo-desc">Warm Belgian Chocolate Waffle with Nutella + Classic Choco Lava Cake + Fudgy Hazelnut Brownie Bites</p>
+            <div class="combo-items-pills">
+              <span>🧇 Belgian Waffle</span>
+              <span>🍫 Molten Lava</span>
+              <span>🌰 Fudge Brownie</span>
+              <span>🍨 Vanilla Scoop</span>
+            </div>
+            <div class="combo-footer">
+              <div class="combo-price-group">
+                <span class="combo-price">₹329</span>
+                <span class="combo-original-price">₹430</span>
+              </div>
+              <button class="btn-add-combo" onclick="addComboToCart('Sweet Euphoria Dessert Box', 329, 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600&auto=format&fit=crop&q=80')">
+                <i class="fa-solid fa-plus"></i> Add Combo
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Category Strip -->
+    <section class="category-carousel-section">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Explore by Category</h2>
+          <p class="section-subtitle">Pick from 12 mouth-watering food categories</p>
+        </div>
+        <div class="carousel-nav-arrows">
+          <button class="carousel-arrow" onclick="scrollCategoryCarousel(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+          <button class="carousel-arrow" onclick="scrollCategoryCarousel(1)"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </div>
+
+      <div class="category-carousel" id="categoryCarousel">
+        <!-- Injected dynamically via JS -->
+      </div>
+    </section>
+
+    <!-- Main Dishes Grid -->
+    <section class="dishes-grid-section">
+      <div class="section-header flex-between">
+        <div>
+          <h2 class="section-title" id="menuGridTitle">Today's Fresh Gourmet Menu</h2>
+          <p class="section-subtitle" id="menuGridCount">Showing delicious dishes prepared fresh to order</p>
+        </div>
+
+        <div class="sort-dropdown-wrapper">
+          <label for="sortBySelect"><i class="fa-solid fa-arrow-down-short-wide"></i> Sort By:</label>
+          <select id="sortBySelect" onchange="handleSortChange(this.value)">
+            <option value="popular">Most Popular ⭐</option>
+            <option value="time">Fastest Delivery ⚡</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="dishes-grid" id="dishesGrid">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+
+      <!-- Load More Button -->
+      <div class="menu-pagination-bar" id="menuPaginationBar">
+        <button class="btn-load-more" id="loadMoreDishesBtn" onclick="loadMoreDishes()">
+          <i class="fa-solid fa-utensils"></i> Show More Dishes (<span id="loadMoreRemainingCount">...</span> more available)
+        </button>
+      </div>
+    </section>
+
+    <!-- Customer Reviews & Foodie Love Section -->
+    <section class="testimonials-section" id="reviewsSection">
+      <div class="reviews-header-wrap">
+        <div class="reviews-header-left">
+          <div class="section-tag-pill">❤️ 25,000+ HAPPY FOODIES</div>
+          <h2 class="section-title">Loved by Food Lovers Across the City</h2>
+          <p class="section-subtitle">Real reviews from our regular foodies who order hot gourmet meals every day</p>
+        </div>
+        <div class="reviews-actions-group">
+          <div class="reviews-stats-pill">
+            <span class="stars-gold">⭐⭐⭐⭐⭐</span>
+            <strong>4.9 / 5.0</strong>
+            <span class="reviews-count-tag">(3,850+ Verified Ratings)</span>
+          </div>
+          <button class="btn-write-review" onclick="openWriteReviewModal()">
+            <i class="fa-solid fa-feather-pointed"></i> ✍️ Share Your Review
+          </button>
+        </div>
+      </div>
+
+      <!-- Dynamic Customer Reviews Grid Container -->
+      <div class="reviews-grid" id="reviewsGrid">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+
+      <!-- See More Reviews Button Bar -->
+      <div class="reviews-pagination-bar" id="reviewsPaginationBar">
+        <button class="btn-see-more-reviews" id="btnSeeMoreReviews" onclick="toggleSeeMoreReviews()">
+          <i class="fa-solid fa-chevron-down" id="seeMoreReviewsIcon"></i> <span id="seeMoreReviewsText">See More Reviews (6+ More)</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- VIP Crave Club & Quality Guarantee Section -->
+    <section class="vip-club-section">
+      <div class="vip-card-banner">
+        <div class="vip-content">
+          <div class="vip-pill"><i class="fa-solid fa-crown text-accent"></i> VIP CRAVE CLUB MEMBERSHIP</div>
+          <h2>Get Unlimited Free Deliveries & 10% Extra Cashback</h2>
+          <p>Join over 10,000 members who enjoy zero delivery fees, VIP priority kitchen preparation, and secret seasonal menu tasting boxes.</p>
+          <div class="vip-perks-row">
+            <div class="vip-perk" onclick="openPriorityRushModal()" title="Click to view 15-Min Priority Rush details"><i class="fa-solid fa-bolt text-primary"></i> 15-Min Priority Rush</div>
+            <div class="vip-perk" onclick="openVipOffersModal()" title="Click to view secret 50% OFF VIP coupons"><i class="fa-solid fa-percent text-emerald"></i> Up to 50% Off Offers</div>
+            <div class="vip-perk" onclick="openFreeDessertsModal()" title="Click to pick your free gourmet dessert"><i class="fa-solid fa-cake-candles text-accent"></i> Free Birthday Desserts</div>
+          </div>
+          <div class="vip-action-row">
+            <button class="btn-join-vip" onclick="joinVipClub()">
+              <i class="fa-solid fa-crown"></i> Join Crave Club (Free for 30 Days)
+            </button>
+            <span class="vip-note">No credit card needed • Cancel anytime</span>
+          </div>
+        </div>
+        <div class="vip-visual">
+          <div class="vip-gold-badge">
+            <i class="fa-solid fa-gem"></i>
+            <span>CRAVE GOLD</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Floating Order Tracker Bar (Visible when order is in progress) -->
+    <div class="floating-order-banner" id="floatingOrderBanner" style="display: none;" onclick="openOrderTrackingModal()">
+      <div class="floating-banner-left">
+        <div class="radar-ping-icon">
+          <i class="fa-solid fa-motorcycle"></i>
+        </div>
+        <div>
+          <div class="floating-banner-title">
+            <span>Order #<span id="floatingOrderId">CP-8921</span> In Progress</span>
+            <span class="floating-status-pill" id="floatingStatusPill">Kitchen Cooking</span>
+          </div>
+          <div class="floating-banner-eta">
+            Estimated Arrival: <strong id="floatingEtaText">14 mins</strong> • Delivery Hero: <span id="floatingRiderName">Vikram S.</span>
+          </div>
+        </div>
+      </div>
+      <div class="floating-banner-right">
+        <button class="btn-track-live">
+          <i class="fa-solid fa-location-crosshairs"></i> Track Live On Map
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- 2. KITCHEN DISPLAY SYSTEM (KDS) VIEW                                      -->
+  <!-- ========================================================================= -->
+  <section class="portal-view" id="kdsPortalView">
+    <div class="kds-dashboard-container">
+      <div class="kds-top-bar">
+        <div class="kds-title-group">
+          <h2><i class="fa-solid fa-kitchen-set text-warning"></i> Live Kitchen Order Board</h2>
+          <p>Real-time order cooking status, preparation queue, and food availability controls</p>
+        </div>
+        <div class="kds-stats-pills">
+          <div class="kds-stat-card">
+            <span class="stat-label">Active Orders</span>
+            <span class="stat-value" id="kdsActiveOrdersCount">0</span>
+          </div>
+          <div class="kds-stat-card">
+            <span class="stat-label">Avg Cook Time</span>
+            <span class="stat-value text-accent">7.4 min</span>
+          </div>
+          <div class="kds-stat-card kds-auth-status-card" id="kdsAuthStatusCard">
+            <span class="stat-label">Access Mode</span>
+            <span class="stat-value text-warning" id="kdsAuthStatusLabel" style="font-size:0.85rem;"><i class="fa-solid fa-user-shield"></i> Owner Active</span>
+          </div>
+          <button class="btn-demo-order" onclick="injectDemoOrder()">
+            <i class="fa-solid fa-plus"></i> Place Test Order
+          </button>
+          <button class="btn-kds-logout" id="btnKdsLogout" onclick="logoutOwner()" title="Logout from Kitchen View and return to Customer Menu">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i> Exit / Logout
+          </button>
+        </div>
+      </div>
+
+      <!-- KDS Kanban Columns -->
+      <div class="kds-kanban-board">
+        <!-- Column 1: Incoming / New -->
+        <div class="kanban-column incoming-col">
+          <div class="kanban-header">
+            <div class="kanban-title"><span class="status-indicator incoming"></span> NEW ORDERS</div>
+            <span class="kanban-count" id="kdsIncomingCount">0</span>
+          </div>
+          <div class="kanban-cards-list" id="kdsIncomingList">
+            <!-- Dynamic order cards -->
+          </div>
+        </div>
+
+        <!-- Column 2: In Kitchen / Cooking -->
+        <div class="kanban-column cooking-col">
+          <div class="kanban-header">
+            <div class="kanban-title"><span class="status-indicator cooking"></span> CURRENTLY COOKING</div>
+            <span class="kanban-count" id="kdsCookingCount">0</span>
+          </div>
+          <div class="kanban-cards-list" id="kdsCookingList">
+            <!-- Dynamic order cards -->
+          </div>
+        </div>
+
+        <!-- Column 3: Ready for Pickup -->
+        <div class="kanban-column ready-col">
+          <div class="kanban-header">
+            <div class="kanban-title"><span class="status-indicator ready"></span> PACKED & READY FOR PICKUP</div>
+            <span class="kanban-count" id="kdsReadyCount">0</span>
+          </div>
+          <div class="kanban-cards-list" id="kdsReadyList">
+            <!-- Dynamic order cards -->
+          </div>
+        </div>
+      </div>
+
+      <!-- KDS Inventory Stock Management -->
+      <div class="kds-inventory-section">
+        <div class="inventory-header">
+          <h3><i class="fa-solid fa-boxes-stacked text-primary"></i> Item Stock & Availability Manager</h3>
+          <p>Easily toggle items In Stock or Sold Out to update customer menu instantly</p>
+        </div>
+        <div class="inventory-toggles-grid" id="kdsInventoryGrid">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 3. FLEET DISPATCH & DELIVERY ROUTING VIEW                                 -->
+  <!-- ========================================================================= -->
+  <section class="portal-view" id="fleetPortalView">
+    <div class="fleet-dashboard-container">
+      <div class="fleet-top-bar">
+        <div>
+          <h2><i class="fa-solid fa-map-location-dot text-primary"></i> Delivery Partner Live Route Map</h2>
+          <p>Live delivery partner tracking, road traffic simulator & fastest route finder</p>
+        </div>
+        <div class="fleet-action-buttons">
+          <button class="btn-run-dijkstra" onclick="runDijkstraSimulation()">
+            <i class="fa-solid fa-route"></i> Find Fastest Route
+          </button>
+          <button class="btn-traffic-surge" id="trafficSurgeBtn" onclick="toggleSimulatedTrafficSurge()">
+            <i class="fa-solid fa-triangle-exclamation"></i> Simulate Traffic Delay
+          </button>
+        </div>
+      </div>
+
+      <div class="fleet-grid-layout">
+        <!-- Interactive Node Graph & Map Canvas -->
+        <div class="fleet-map-card">
+          <div class="fleet-card-header">
+            <div class="fleet-header-title">
+              <i class="fa-solid fa-network-wired text-accent"></i> City Delivery Route Network
+            </div>
+            <div class="fleet-legend">
+              <span class="legend-item"><span class="legend-dot cloud-kitchen"></span> Kitchen Hub</span>
+              <span class="legend-item"><span class="legend-dot customer-node"></span> Your Doorstep</span>
+              <span class="legend-item"><span class="legend-dot active-rider"></span> Delivery Hero</span>
+              <span class="legend-item"><span class="legend-line shortest"></span> Fastest Path</span>
+            </div>
+          </div>
+          
+          <div class="canvas-wrapper">
+            <canvas id="fleetGraphCanvas" width="700" height="420"></canvas>
+          </div>
+
+          <div class="algorithm-output-log" id="dijkstraLogBox">
+            <div class="log-title"><i class="fa-solid fa-terminal"></i> Route Calculation Summary:</div>
+            <div class="log-content" id="dijkstraLogContent">
+              Click <strong>"Find Fastest Route"</strong> to compute the shortest road path from kitchen to customer.
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Fleet Telemetry & Active Riders -->
+        <div class="fleet-sidebar-card">
+          <div class="fleet-card-header">
+            <div class="fleet-header-title">
+              <i class="fa-solid fa-helmet-safety text-emerald"></i> Active Delivery Partners (4)
+            </div>
+          </div>
+
+          <div class="riders-list" id="fleetRidersList">
+            <!-- Injected via JS -->
+          </div>
+
+          <!-- Zone Traffic & Speed -->
+          <div class="zone-metrics-card">
+            <h4><i class="fa-solid fa-chart-simple text-warning"></i> Area Traffic & Average Delivery Times</h4>
+            <div class="zone-bar-group">
+              <div class="zone-bar-header">
+                <span>Sector 4 (Tech Park)</span>
+                <span class="text-emerald font-mono">1.2 km • 6 min</span>
+              </div>
+              <div class="progress-track"><div class="progress-fill low" style="width: 25%;"></div></div>
+            </div>
+            <div class="zone-bar-group">
+              <div class="zone-bar-header">
+                <span>Sector 9 (University Hub)</span>
+                <span class="text-warning font-mono" id="uniZoneStatus">2.8 km • 11 min</span>
+              </div>
+              <div class="progress-track"><div class="progress-fill med" id="uniZoneBar" style="width: 55%;"></div></div>
+            </div>
+            <div class="zone-bar-group">
+              <div class="zone-bar-header">
+                <span>Sector 14 (Cyber Gateway)</span>
+                <span class="text-emerald font-mono">3.4 km • 14 min</span>
+              </div>
+              <div class="progress-track"><div class="progress-fill low" style="width: 35%;"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: HYPER-REALISTIC INTERACTIVE DISH CUSTOMIZER & CULINARY STUDIO      -->
+  <!-- ========================================================================= -->
+  <div class="modal-backdrop" id="dishCustomizerModal" style="display: none;" onclick="handleModalBackdropClick(event, 'dishCustomizerModal')">
+    <div class="customizer-modal-content">
+      <div class="customizer-modal-header">
+        <div class="modal-header-titles">
+          <div class="customizer-badge"><i class="fa-solid fa-wand-magic-sparkles text-accent"></i> MASTER CULINARY STUDIO</div>
+          <h2 id="customizerModalTitle">Craft Your Ultimate Smash Burger</h2>
+          <p id="customizerModalSubtitle">Select your artisanal bun, sizzling patties, molten gourmet cheeses, and chef sauces with live real-time visual stacking!</p>
+        </div>
+        <button class="modal-close-btn" onclick="closeDishCustomizer()" title="Close Studio"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <!-- Studio Category Switcher Tabs -->
+      <div class="studio-category-tabs-bar">
+        <button class="studio-cat-tab active" id="studioTabBurger" onclick="switchCustomizerCategory('burger')">
+          <span class="tab-emoji">🍔</span> <strong>Smash Burger</strong>
+        </button>
+        <button class="studio-cat-tab" id="studioTabPizza" onclick="switchCustomizerCategory('pizza')">
+          <span class="tab-emoji">🍕</span> <strong>Artisan Pizza</strong>
+        </button>
+        <button class="studio-cat-tab" id="studioTabBiryani" onclick="switchCustomizerCategory('biryani')">
+          <span class="tab-emoji">🍲</span> <strong>Dum Biryani</strong>
+        </button>
+        <button class="studio-cat-tab" id="studioTabWaffle" onclick="switchCustomizerCategory('waffle')">
+          <span class="tab-emoji">🧇</span> <strong>Belgian Waffle</strong>
+        </button>
+      </div>
+
+      <div class="customizer-body-grid">
+        <!-- Visual Food Stage: Realistic Visual Stacker with Live Macros -->
+        <div class="visual-stack-preview-panel">
+          <div class="studio-dish-stage" id="customizerVisualStack">
+            <!-- Rendered dynamically by app.js with real photography layers -->
+          </div>
+
+          <!-- Dynamic Live Metric Dials -->
+          <div class="live-builder-metrics">
+            <div class="metric-dial">
+              <div class="metric-icon text-warning"><i class="fa-solid fa-fire"></i></div>
+              <div class="metric-info">
+                <span class="metric-lbl">Total Calories</span>
+                <span class="metric-val" id="customizerCalories">640 kcal</span>
+              </div>
+            </div>
+            <div class="metric-dial">
+              <div class="metric-icon text-emerald"><i class="fa-solid fa-dumbbell"></i></div>
+              <div class="metric-info">
+                <span class="metric-lbl">Protein</span>
+                <span class="metric-val" id="customizerProtein">36 g</span>
+              </div>
+            </div>
+            <div class="metric-dial">
+              <div class="metric-icon text-primary"><i class="fa-solid fa-wheat-awn"></i></div>
+              <div class="metric-info">
+                <span class="metric-lbl">Carbs</span>
+                <span class="metric-val" id="customizerCarbs">48 g</span>
+              </div>
+            </div>
+            <div class="metric-dial">
+              <div class="metric-icon text-accent"><i class="fa-solid fa-stopwatch"></i></div>
+              <div class="metric-info">
+                <span class="metric-lbl">Oven / Prep</span>
+                <span class="metric-val" id="customizerPrepTime">8 min</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Customizer Ingredient Options Panel -->
+        <div class="customizer-options-panel" id="customizerOptionsPanel">
+          <!-- Dynamic radio/checkbox groups with real food photos injected via JS -->
+        </div>
+      </div>
+
+      <div class="customizer-modal-footer">
+        <div class="customizer-footer-price">
+          <div class="footer-price-sub">Live Calculated Total:</div>
+          <div class="footer-price-main">
+            <span class="price-value" id="customizerTotalPrice">₹329</span>
+            <span class="price-original-struck" id="customizerOriginalPrice">₹429</span>
+            <span class="discount-pill-green">SAVE ₹100</span>
+          </div>
+        </div>
+        <div class="customizer-footer-actions">
+          <button class="btn-studio-direct-order" onclick="directOrderCustomDish()">
+            <i class="fa-solid fa-bolt"></i> ⚡ Direct Order Now
+          </button>
+          <button class="btn-add-custom-cart" onclick="saveCustomDishToCart()">
+            <i class="fa-solid fa-basket-shopping"></i> Add Custom Meal to Basket
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: LIVE DOORSTEP DELIVERY & UNBOXING PREVIEW                          -->
+  <!-- ========================================================================= -->
+  <div class="modal-backdrop" id="dishDeliveryPreviewModal" style="display: none;">
+    <div class="delivery-preview-modal-content">
+      <div class="delivery-preview-header">
+        <div class="modal-header-titles">
+          <span class="delivery-preview-badge"><i class="fa-solid fa-box-open"></i> LIVE DOORSTEP DELIVERY & UNBOXING VIEW</span>
+          <h2 id="prevModalDishName">Truffle Wild Mushroom Sourdough Pizza</h2>
+          <div class="prev-dish-submeta" id="prevModalSubmeta">
+            <span class="diet-indicator"><span class="diet-dot veg" id="prevModalDietDot"></span> <span id="prevModalDietText">Veg</span></span>
+            <span class="meta-dot">•</span>
+            <span id="prevModalCategory">Artisan Pizzas</span>
+            <span class="meta-dot">•</span>
+            <span class="dish-rating"><i class="fa-solid fa-star text-accent"></i> <span id="prevModalRating">4.9 (1.2k reviews)</span></span>
+            <span class="meta-dot">•</span>
+            <span class="text-emerald font-mono font-bold" id="prevModalPrepTime">⚡ Cooked to Order (12m)</span>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="closeDishDeliveryPreview()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <!-- View Switcher Tabs -->
+      <div class="delivery-view-tabs">
+        <button class="prev-tab-btn active" id="tabDeliveryBox" onclick="switchDeliveryPreviewTab('box')">
+          <i class="fa-solid fa-box"></i> 1. How it arrives in box (Thermal Sealed)
+        </button>
+        <button class="prev-tab-btn" id="tabPlatedDish" onclick="switchDeliveryPreviewTab('plated')">
+          <i class="fa-solid fa-utensils"></i> 2. Ready to eat (Unboxed)
+        </button>
+        <button class="prev-tab-btn" id="tabSpecsQuality" onclick="switchDeliveryPreviewTab('specs')">
+          <i class="fa-solid fa-shield-halved"></i> 3. Nutrition & Packaging Details
+        </button>
+      </div>
+
+      <div class="delivery-preview-body">
+        <!-- MODE 1: AS DELIVERED IN THERMAL BOX -->
+        <div class="preview-mode-view" id="modeViewBox">
+          <div class="box-presentation-grid">
+            <!-- Left: Animated Package Visualizer -->
+            <div class="package-visualizer-box">
+              <div class="thermal-box-container" id="thermalBoxModel">
+                <div class="thermal-box-lid" id="boxLidElement">
+                  <div class="brand-crest"><i class="fa-solid fa-fire-burner"></i> CRAVEPULSE 360</div>
+                  <div class="hologram-seal" id="boxSecuritySeal">
+                    <i class="fa-solid fa-lock"></i> 100% CLEAN & HYGIENE SEALED
+                  </div>
+                  <div class="box-lid-handle"></div>
+                </div>
+                <div class="thermal-box-tray">
+                  <div class="steaming-inside-glow"></div>
+                  <img id="boxInsideDishImg" src="" alt="Inside Dish" class="box-dish-preview-img">
+                </div>
+              </div>
+
+              <!-- Unbox Action Button -->
+              <div class="unbox-cta-banner">
+                <button class="btn-simulate-unbox" id="btnSimulateUnbox" onclick="triggerLiveUnboxAnimation()">
+                  <i class="fa-solid fa-wand-magic-sparkles"></i> <span>Open Box & See Food 🍽️</span>
+                </button>
+                <div class="unbox-tip-text">Click to open the thermal lid and view your piping hot meal!</div>
+              </div>
+            </div>
+
+            <!-- Right: Delivery Package Breakdown -->
+            <div class="package-telemetry-sidebar">
+              <!-- Transit Temperature Gauge -->
+              <div class="telemetry-stat-card temp-card">
+                <div class="telemetry-icon text-warning"><i class="fa-solid fa-temperature-three-quarters"></i></div>
+                <div class="telemetry-info">
+                  <div class="telem-label">HOT & FRESH DELIVERY GUARANTEE</div>
+                  <div class="telem-val text-warning" id="prevCoreTemp">64.5°C • Piping Hot</div>
+                  <div class="telem-sub">Special thermal box keeps your food steaming hot right up to your doorstep</div>
+                </div>
+              </div>
+
+              <!-- What's in the Box Checklist -->
+              <div class="unbox-inventory-card">
+                <h4><i class="fa-solid fa-boxes-packing text-emerald"></i> What you'll find inside your box:</h4>
+                <div class="inventory-items-list" id="prevInventoryList">
+                  <!-- Dynamic items list -->
+                </div>
+              </div>
+
+              <!-- Hygiene & Freshness Certification -->
+              <div class="hygiene-cert-card">
+                <div class="cert-row"><i class="fa-solid fa-circle-check text-emerald"></i> <span>Hygiene sealed right from the kitchen oven</span></div>
+                <div class="cert-row"><i class="fa-solid fa-circle-check text-emerald"></i> <span>100% Food-grade chemical-free safe box</span></div>
+                <div class="cert-row"><i class="fa-solid fa-circle-check text-emerald"></i> <span>Delivery partner temperature checked & verified</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MODE 2: UNBOXED & READY TO EAT -->
+        <div class="preview-mode-view" id="modeViewPlated" style="display: none;">
+          <div class="plated-presentation-grid">
+            <!-- Left: Hero High-Res Real Food Photo with Live Steam -->
+            <div class="plated-hero-container">
+              <div class="dish-steam-particles">
+                <div class="steam-wisp wisp-1"></div>
+                <div class="steam-wisp wisp-2"></div>
+                <div class="steam-wisp wisp-3"></div>
+              </div>
+              <img id="prevPlatedHeroImg" src="" alt="Plated Dish" class="plated-hero-img">
+              <div class="plated-photo-badge">
+                <i class="fa-solid fa-camera"></i> Actual Food Photo
+              </div>
+            </div>
+
+            <!-- Right: Portion & Chef Notes -->
+            <div class="plated-details-sidebar">
+              <div class="plated-highlight-card">
+                <h3 id="prevPlatedTitle">Gourmet Burger</h3>
+                <p class="plated-desc-text" id="prevPlatedDesc"></p>
+              </div>
+
+              <!-- Portion & Spice Metrics -->
+              <div class="plated-metrics-row">
+                <div class="plated-metric-box">
+                  <span class="m-lbl">Portion Weight</span>
+                  <span class="m-val text-primary" id="prevPortionWeight">480g (Serves 1-2)</span>
+                </div>
+                <div class="plated-metric-box">
+                  <span class="m-lbl">Spice Level</span>
+                  <span class="m-val text-warning" id="prevSpiceMeter">🌶️ Mild & Tasty</span>
+                </div>
+                <div class="plated-metric-box">
+                  <span class="m-lbl">Preparation</span>
+                  <span class="m-val text-emerald">Freshly Cooked</span>
+                </div>
+              </div>
+
+              <!-- Chef's Garnish Note -->
+              <div class="chef-garnish-card">
+                <div class="chef-garnish-header">
+                  <i class="fa-solid fa-kitchen-set text-accent"></i>
+                  <strong>Chef's Presentation Note:</strong>
+                </div>
+                <p id="prevChefGarnishNote">Prepared fresh to order with pure ingredients, authentic seasonings, and a delicious aroma.</p>
+              </div>
+
+              <!-- Reheat Instructions -->
+              <div class="reheat-advice-box">
+                <i class="fa-solid fa-temperature-arrow-up text-cyber-blue"></i>
+                <div>
+                  <strong>Ready to Eat Immediately:</strong>
+                  <p>Best enjoyed fresh upon arrival! If eating later, you can warm it for 45 seconds in the microwave.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MODE 3: NUTRITION & PACKAGING -->
+        <div class="preview-mode-view" id="modeViewSpecs" style="display: none;">
+          <div class="specs-grid-layout">
+            <!-- Macros & Nutrition -->
+            <div class="specs-card">
+              <h4><i class="fa-solid fa-chart-pie text-accent"></i> Healthy Nutrition Info</h4>
+              <div class="macros-dials-grid">
+                <div class="macro-pill">
+                  <span class="macro-val text-warning" id="prevSpecCalories">540</span>
+                  <span class="macro-lbl">Calories (kcal)</span>
+                </div>
+                <div class="macro-pill">
+                  <span class="macro-val text-emerald" id="prevSpecProtein">28g</span>
+                  <span class="macro-lbl">Protein</span>
+                </div>
+                <div class="macro-pill">
+                  <span class="macro-val text-cyber-blue" id="prevSpecCarbs">52g</span>
+                  <span class="macro-lbl">Carbs</span>
+                </div>
+                <div class="macro-pill">
+                  <span class="macro-val text-primary" id="prevSpecFats">18g</span>
+                  <span class="macro-lbl">Healthy Fats</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Allergen & Diet Safety -->
+            <div class="specs-card">
+              <h4><i class="fa-solid fa-shield-virus text-emerald"></i> Food Safety & Certifications</h4>
+              <div class="allergens-chips-list" id="prevAllergensList">
+                <span class="allergen-chip safe"><i class="fa-solid fa-check"></i> 100% Quality Ingredients</span>
+                <span class="allergen-chip safe"><i class="fa-solid fa-check"></i> Zero Trans Fats</span>
+                <span class="allergen-chip safe"><i class="fa-solid fa-check"></i> Clean & Hygienic Prep</span>
+              </div>
+            </div>
+
+            <!-- Sustainable Packaging Spec -->
+            <div class="specs-card full-width">
+              <h4><i class="fa-solid fa-leaf text-emerald"></i> Eco-Friendly Biodegradable Packaging</h4>
+              <p>Every CravePulse meal is packaged in 100% compostable and food-safe containers that keep your food hot and fresh while protecting nature.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="delivery-preview-footer">
+        <div class="prev-portion-selector">
+          <span class="portion-title">Serving:</span>
+          <button class="portion-btn active" id="portionRegBtn" onclick="selectPreviewPortion('reg')">
+            Regular (1 Person)
+          </button>
+          <button class="portion-btn" id="portionJumboBtn" onclick="selectPreviewPortion('jumbo')">
+            Large (2-3 People) (+₹80)
+          </button>
+        </div>
+
+        <div class="prev-addon-pills">
+          <label class="addon-check-label">
+            <input type="checkbox" id="addonDipCheck" onchange="togglePreviewAddon()">
+            <span>Add Tasty Dip (+₹25)</span>
+          </label>
+          <label class="addon-check-label">
+            <input type="checkbox" id="addonCutleryCheck" checked>
+            <span>Include Cutlery (Free)</span>
+          </label>
+        </div>
+
+        <div class="prev-footer-cta-group">
+          <div class="prev-stepper-qty">
+            <button onclick="updatePreviewQty(-1)">-</button>
+            <span id="prevQtyVal">1</span>
+            <button onclick="updatePreviewQty(1)">+</button>
+          </div>
+          <button class="btn-prev-add-cart" onclick="addPreviewDishToCart()">
+            <i class="fa-solid fa-bag-shopping"></i> Add to Cart • <span id="prevFooterTotalPrice">₹349</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: LIVE ORDER TRACKING                                                -->
+  <!-- ========================================================================= -->
+  <div class="modal-backdrop" id="orderTrackingModal" style="display: none;">
+    <div class="tracking-modal-content">
+      <div class="tracking-modal-header">
+        <div class="tracking-header-left">
+          <div class="live-pulse-badge"><span class="pulse-dot"></span> LIVE ORDER TRACKER</div>
+          <h2>Live Order Tracking • <span class="text-primary font-mono" id="trackModalOrderId">#CP-8921</span></h2>
+        </div>
+        <button class="modal-close-btn" onclick="closeOrderTrackingModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="tracking-grid-layout">
+        <!-- Left: Interactive Canvas Road Map -->
+        <div class="tracking-map-panel">
+          <div class="map-overlay-eta">
+            <div class="eta-icon"><i class="fa-solid fa-stopwatch text-primary"></i></div>
+            <div>
+              <div class="eta-label">ESTIMATED ARRIVAL TIME</div>
+              <div class="eta-timer" id="trackModalEtaCountdown">12:45</div>
+            </div>
+            <div class="rider-speed-meter">
+              <span class="speed-val" id="trackModalSpeedVal">28</span>
+              <span class="speed-unit">km/h</span>
+            </div>
+          </div>
+
+          <div class="canvas-road-container">
+            <canvas id="liveRoadMapCanvas" width="620" height="380"></canvas>
+          </div>
+
+          <!-- Rider Profile Card -->
+          <div class="rider-profile-bar">
+            <div class="rider-avatar-wrapper">
+              <div class="rider-avatar"><i class="fa-solid fa-user-astronaut"></i></div>
+              <div class="rider-online-dot"></div>
+            </div>
+            <div class="rider-info-text">
+              <div class="rider-name-rating">
+                <strong id="trackModalRiderName">Vikram Sharma</strong>
+                <span class="rider-star-badge"><i class="fa-solid fa-star"></i> 4.9 (1.4k deliveries)</span>
+              </div>
+              <div class="rider-vehicle">⚡ Electric Scooter • <span class="font-mono">MH-12-CP-2026</span></div>
+            </div>
+            <div class="rider-contact-actions">
+              <button class="btn-rider-call" onclick="triggerSimulatedCall()"><i class="fa-solid fa-phone"></i> Call</button>
+              <button class="btn-rider-tip" onclick="quickTipRiderModal()"><i class="fa-solid fa-hand-holding-dollar"></i> Tip</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Order Progress & Rider Chat -->
+        <div class="tracking-status-chat-panel">
+          <!-- Live Milestone Stepper -->
+          <div class="milestones-card">
+            <div class="milestones-card-header">
+              <h4><i class="fa-solid fa-timeline text-accent"></i> Order Progress</h4>
+              <div class="milestone-controls">
+                <button class="btn-milestone-jump" onclick="jumpToNextOrderStep()" title="Advance to next stage immediately">
+                  <i class="fa-solid fa-forward-step"></i> Next Stage
+                </button>
+                <button class="btn-milestone-replay" onclick="replayOrderSimulation()" title="Replay full delivery journey">
+                  <i class="fa-solid fa-rotate-right"></i> Replay
+                </button>
+              </div>
+            </div>
+            <div class="stepper-list">
+              <div class="step-item completed" id="step1">
+                <div class="step-icon"><i class="fa-solid fa-check"></i></div>
+                <div class="step-content">
+                  <div class="step-title">Order Placed & Confirmed</div>
+                  <div class="step-time" id="step1Time">12:02 PM</div>
+                </div>
+              </div>
+
+              <div class="step-item active" id="step2">
+                <div class="step-icon"><i class="fa-solid fa-kitchen-set"></i></div>
+                <div class="step-content">
+                  <div class="step-title">Kitchen is Cooking Your Food</div>
+                  <div class="step-time">Fresh Ingredients • Seared to Order</div>
+                </div>
+              </div>
+
+              <div class="step-item" id="step3">
+                <div class="step-icon"><i class="fa-solid fa-box-open"></i></div>
+                <div class="step-content">
+                  <div class="step-title">Food Packed in Sealed Thermal Box</div>
+                  <div class="step-time">Hygiene Inspected & Ready for Rider</div>
+                </div>
+              </div>
+
+              <div class="step-item" id="step4">
+                <div class="step-icon"><i class="fa-solid fa-motorcycle"></i></div>
+                <div class="step-content">
+                  <div class="step-title">Delivery Partner On The Way</div>
+                  <div class="step-time">Riding to your address</div>
+                </div>
+              </div>
+
+              <div class="step-item" id="step5">
+                <div class="step-icon"><i class="fa-solid fa-house-chimney"></i></div>
+                <div class="step-content">
+                  <div class="step-title">Delivered at Your Doorstep</div>
+                  <div class="step-time">Enjoy your fresh meal!</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Live Rider Chat -->
+          <div class="rider-chat-card">
+            <div class="chat-card-header">
+              <div class="chat-header-title">
+                <i class="fa-solid fa-comments text-emerald"></i> Message Delivery Partner
+              </div>
+              <span class="chat-active-badge">Online</span>
+            </div>
+
+            <div class="chat-messages-scroll" id="riderChatMessages">
+              <div class="chat-bubble rider">
+                <div class="chat-sender">Vikram (Delivery Hero):</div>
+                <div class="chat-text">Namaste! I've picked up your hot order and am on the way. ETA is ~15 mins.</div>
+                <div class="chat-time">Just now</div>
+              </div>
+            </div>
+
+            <!-- Quick Preset Chips -->
+            <div class="chat-quick-chips">
+              <button class="quick-chip" onclick="sendQuickRiderMessage('Please ring doorbell twice')">🔔 Ring doorbell</button>
+              <button class="quick-chip" onclick="sendQuickRiderMessage('Keep order with security guard')">🛡️ Leave at gate</button>
+              <button class="quick-chip" onclick="sendQuickRiderMessage('Call when you arrive')">📞 Call on arrival</button>
+            </div>
+
+            <form class="chat-input-row" onsubmit="handleSendCustomChatMessage(event)">
+              <input type="text" id="riderChatInput" placeholder="Type a message to delivery partner...">
+              <button type="submit" class="btn-chat-send"><i class="fa-solid fa-paper-plane"></i></button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- DRAWER: SMART CART & BILL SPLIT                                           -->
+  <!-- ========================================================================= -->
+  <div class="drawer-backdrop" id="cartDrawerBackdrop" style="display: none;" onclick="toggleCartDrawer(false)"></div>
+  <aside class="cart-drawer" id="cartDrawer">
+    <div class="cart-drawer-header">
+      <div class="cart-drawer-title">
+        <i class="fa-solid fa-bag-shopping text-primary"></i>
+        <span>Your Food Basket</span>
+        <span class="cart-drawer-badge" id="cartDrawerItemCount">0 items</span>
+      </div>
+      <button class="drawer-close-btn" onclick="toggleCartDrawer(false)"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <!-- Empty Cart State -->
+    <div class="empty-cart-state" id="emptyCartState">
+      <div class="empty-cart-icon"><i class="fa-solid fa-bowl-food"></i></div>
+      <h3>Your basket is empty!</h3>
+      <p>Explore our menu or create your own custom burger or pizza in the builder.</p>
+      <button class="btn-browse-food" onclick="toggleCartDrawer(false)">Browse Menu</button>
+    </div>
+
+    <!-- Loaded Cart Body -->
+    <div class="cart-drawer-body" id="loadedCartBody" style="display: none;">
+      <!-- Cart Items List -->
+      <div class="cart-items-list" id="cartItemsList">
+        <!-- Rendered via JS -->
+      </div>
+
+      <!-- Bill Splitter Tool -->
+      <div class="bill-splitter-accordion">
+        <div class="splitter-header" onclick="toggleBillSplitter()">
+          <div class="splitter-title">
+            <i class="fa-solid fa-users-viewfinder text-primary"></i>
+            <span>Split Bill with Friends</span>
+          </div>
+          <i class="fa-solid fa-chevron-down" id="splitterChevron"></i>
+        </div>
+
+        <div class="splitter-body" id="splitterBody" style="display: none;">
+          <div class="friends-stepper">
+            <label>Number of Friends:</label>
+            <div class="stepper-controls">
+              <button onclick="changeSplitFriends(-1)">-</button>
+              <span id="splitFriendsCount">3</span>
+              <button onclick="changeSplitFriends(1)">+</button>
+            </div>
+          </div>
+          <div class="split-result-box">
+            <div class="split-per-person">
+              <span class="split-label">Each Person Pays:</span>
+              <span class="split-amount" id="splitPerPersonAmount">₹0</span>
+            </div>
+            <button class="btn-copy-upi" onclick="copyUpiShareLink()">
+              <i class="fa-solid fa-share-nodes"></i> Copy UPI Share Details
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Promo Code Section -->
+      <div class="promo-section">
+        <div class="promo-input-row">
+          <input type="text" id="promoCodeInput" placeholder="Enter coupon (e.g. CRAVE50)" style="text-transform: uppercase;">
+          <button class="btn-apply-promo" onclick="applyPromoCodeInput()">Apply</button>
+        </div>
+        <div class="active-promo-tag" id="activePromoTag" style="display: none;">
+          <span id="activePromoText">CRAVE50 Applied (-50%)</span>
+          <button onclick="removePromoCode()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="available-promos-pills">
+          <span class="avail-promo" onclick="applyPromoCode('CRAVE50')">⚡ CRAVE50</span>
+          <span class="avail-promo" onclick="applyPromoCode('STUDENT20')">🎓 STUDENT20</span>
+          <span class="avail-promo" onclick="applyPromoCode('FREEDEL')">🛵 FREEDEL</span>
+        </div>
+      </div>
+
+      <!-- Tip Delivery Partner -->
+      <div class="rider-tip-section">
+        <div class="tip-title"><i class="fa-solid fa-heart text-primary"></i> Tip Your Delivery Hero:</div>
+        <div class="tip-options">
+          <button class="tip-chip" data-tip="0" onclick="setTipAmount(0, this)">₹0</button>
+          <button class="tip-chip" data-tip="20" onclick="setTipAmount(20, this)">₹20</button>
+          <button class="tip-chip active" data-tip="30" onclick="setTipAmount(30, this)">₹30 ⭐</button>
+          <button class="tip-chip" data-tip="50" onclick="setTipAmount(50, this)">₹50</button>
+        </div>
+      </div>
+
+      <!-- Bill Breakdown -->
+      <div class="bill-breakdown-card">
+        <div class="bill-row">
+          <span>Items Total</span>
+          <span id="billSubtotal">₹0</span>
+        </div>
+        <div class="bill-row discount-row" id="billDiscountRow" style="display: none;">
+          <span>Coupon Discount</span>
+          <span class="text-emerald" id="billDiscount">-₹0</span>
+        </div>
+        <div class="bill-row">
+          <span>Delivery Charge</span>
+          <span id="billDeliveryFee">₹29</span>
+        </div>
+        <div class="bill-row">
+          <span>Packaging & Platform Fee</span>
+          <span>₹15</span>
+        </div>
+        <div class="bill-row" id="billTipRow">
+          <span>Delivery Partner Tip</span>
+          <span id="billTip">₹30</span>
+        </div>
+        <div class="bill-divider"></div>
+        <div class="bill-row grand-total-row">
+          <span>Total To Pay</span>
+          <span class="grand-amount" id="billGrandTotal">₹0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cart Footer / Checkout Button -->
+    <div class="cart-drawer-footer" id="cartDrawerFooter" style="display: none;">
+      <button class="btn-checkout-glow" id="btnPlaceOrder" onclick="processCheckout()">
+        <span class="btn-checkout-text">Place Order Now</span>
+        <span class="btn-checkout-amount" id="checkoutBtnAmount">₹0</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Location Picker Modal -->
+  <div class="modal-backdrop" id="locationModal" style="display: none;">
+    <div class="location-modal-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-map-location-dot text-primary"></i> Choose Delivery Address</h3>
+        <button class="modal-close-btn" onclick="closeLocationModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="locations-list">
+        <div class="location-option-card active" onclick="selectLocation('Campus Tech Hub, Tower 4, 3rd Floor', 'Tech Hub')">
+          <div class="loc-opt-icon"><i class="fa-solid fa-laptop-code"></i></div>
+          <div class="loc-opt-info">
+            <strong>Campus Tech Hub</strong>
+            <p>Tower 4, Computer Science Block, Lab 302</p>
+          </div>
+          <span class="loc-eta-badge">12 min</span>
+        </div>
+        <div class="location-option-card" onclick="selectLocation('University Main Hostel, Block B, Room 412', 'Hostel B')">
+          <div class="loc-opt-icon"><i class="fa-solid fa-building"></i></div>
+          <div class="loc-opt-info">
+            <strong>University Main Hostel</strong>
+            <p>Block B, 4th Floor, Campus West Wing</p>
+          </div>
+          <span class="loc-eta-badge">15 min</span>
+        </div>
+        <div class="location-option-card" onclick="selectLocation('Innovation Research Center, Gate 2', 'Research Center')">
+          <div class="loc-opt-icon"><i class="fa-solid fa-microchip"></i></div>
+          <div class="loc-opt-info">
+            <strong>Innovation Research Center</strong>
+            <p>Gate 2, Cyber Corridor, Near Metro</p>
+          </div>
+          <span class="loc-eta-badge">18 min</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- VIP MODAL 1: COMPLIMENTARY FREE GOURMET DESSERTS SHOWCASE                 -->
+  <!-- ========================================================================= -->
+  <div class="modal-backdrop" id="freeDessertsModal" style="display: none;">
+    <div class="vip-desserts-card">
+      <button class="modal-close-btn" onclick="closeFreeDessertsModal()"><i class="fa-solid fa-xmark"></i></button>
+      
+      <div class="vip-modal-header">
+        <div class="vip-pill"><i class="fa-solid fa-crown text-accent"></i> VIP EXCLUSIVE COMPLIMENTARY TREAT</div>
+        <h3>Choose Your Free Gourmet Dessert!</h3>
+        <p class="modal-subtitle">Pick any of our 6 chef-crafted desserts below — yours for ₹0 with your gourmet meal!</p>
+      </div>
+
+      <div class="free-desserts-grid" id="freeDessertsGrid">
+        <!-- Dessert 1 -->
+        <div class="free-dessert-item active" onclick="selectFreeDessert(0, this)">
+          <div class="free-dessert-badge">FREE • ₹0</div>
+          <div class="free-dessert-img-wrap">
+            <img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=500&auto=format&fit=crop&q=80" alt="Molten Choco Lava Cup" class="free-dessert-img">
+          </div>
+          <div class="free-dessert-info">
+            <h4>Molten Choco Lava Cup</h4>
+            <p>Warm Belgian chocolate cake with a rich molten lava core</p>
+            <div class="free-dessert-price">
+              <span class="free-val">₹0</span>
+              <span class="orig-val">₹180</span>
+            </div>
+          </div>
+          <div class="free-select-check"><i class="fa-solid fa-circle-check"></i></div>
+        </div>
+
+        <!-- Dessert 2 -->
+        <div class="free-dessert-item" onclick="selectFreeDessert(1, this)">
+          <div class="free-dessert-badge">FREE • ₹0</div>
+          <div class="free-dessert-img-wrap">
+            <img src="https://images.unsplash.com/photo-1562376552-0d160a2f238d?w=500&auto=format&fit=crop&q=80" alt="Belgian Nutella Waffle" class="free-dessert-img">
+          </div>
+          <div class="free-dessert-info">
+            <h4>Belgian Nutella Waffle</h4>
+            <p>Fresh golden crisp waffle loaded with hazelnut Nutella drizzle</p>
+            <div class="free-dessert-price">
+              <span class="free-val">₹0</span>
+              <span class="orig-val">₹210</span>
+            </div>
+          </div>
+          <div class="free-select-check"><i class="fa-solid fa-circle-check"></i></div>
+        </div>
+
+        <!-- Dessert 3 -->
+        <div class="free-dessert-item" onclick="selectFreeDessert(2, this)">
+          <div class="free-dessert-badge">FREE • ₹0</div>
+          <div class="free-dessert-img-wrap">
+            <img src="https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=500&auto=format&fit=crop&q=80" alt="Classic Italian Tiramisu" class="free-dessert-img">
+          </div>
+          <div class="free-dessert-info">
+            <h4>Classic Italian Tiramisu</h4>
+            <p>Espresso-infused savoiardi biscuit layered with mascarpone cream</p>
+            <div class="free-dessert-price">
+              <span class="free-val">₹0</span>
+              <span class="orig-val">₹240</span>
+            </div>
+          </div>
+          <div class="free-select-check"><i class="fa-solid fa-circle-check"></i></div>
+        </div>
+
+        <!-- Dessert 4 -->
+        <div class="free-dessert-item" onclick="selectFreeDessert(3, this)">
+          <div class="free-dessert-badge">FREE • ₹0</div>
+          <div class="free-dessert-img-wrap">
+            <img src="https://images.unsplash.com/photo-1607920591413-4ec007e70023?w=500&auto=format&fit=crop&q=80" alt="Fudgy Walnut Brownie" class="free-dessert-img">
+          </div>
+          <div class="free-dessert-info">
+            <h4>Fudgy Walnut Brownie</h4>
+            <p>Dense 70% dark chocolate brownie packed with crunchy roasted walnuts</p>
+            <div class="free-dessert-price">
+              <span class="free-val">₹0</span>
+              <span class="orig-val">₹160</span>
+            </div>
+          </div>
+          <div class="free-select-check"><i class="fa-solid fa-circle-check"></i></div>
+        </div>
+
+        <!-- Dessert 5 -->
+        <div class="free-dessert-item" onclick="selectFreeDessert(4, this)">
+          <div class="free-dessert-badge">FREE • ₹0</div>
+          <div class="free-dessert-img-wrap">
+            <img src="https://images.unsplash.com/photo-1586788680434-30d324b2d46f?w=500&auto=format&fit=crop&q=80" alt="Red Velvet Cheesecake Slice" class="free-dessert-img">
+          </div>
+          <div class="free-dessert-info">
+            <h4>Red Velvet Cheesecake</h4>
+            <p>Silky cream cheese layer over soft cocoa red velvet sponge</p>
+            <div class="free-dessert-price">
+              <span class="free-val">₹0</span>
+              <span class="orig-val">₹220</span>
+            </div>
+          </div>
+          <div class="free-select-check"><i class="fa-solid fa-circle-check"></i></div>
+        </div>
+
+        <!-- Dessert 6 -->
+        <div class="free-dessert-item" onclick="selectFreeDessert(5, this)">
+          <div class="free-dessert-badge">FREE • ₹0</div>
+          <div class="free-dessert-img-wrap">
+            <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=500&auto=format&fit=crop&q=80" alt="Royal Mango Kulfi Handi" class="free-dessert-img">
+          </div>
+          <div class="free-dessert-info">
+            <h4>Royal Mango Kulfi Handi</h4>
+            <p>Traditional slow-churned Alphonso mango kulfi with cardamom & pistachios</p>
+            <div class="free-dessert-price">
+              <span class="free-val">₹0</span>
+              <span class="orig-val">₹190</span>
+            </div>
+          </div>
+          <div class="free-select-check"><i class="fa-solid fa-circle-check"></i></div>
+        </div>
+      </div>
+
+      <!-- Claim Sticky Bottom Action -->
+      <div class="free-dessert-action-bar">
+        <div class="selected-dessert-meta">
+          <span>Selected Free Perk:</span>
+          <strong id="selectedDessertName">Molten Choco Lava Cup</strong>
+        </div>
+        <button class="btn-claim-free-dessert" onclick="claimSelectedFreeDessert()">
+          <i class="fa-solid fa-gift"></i> Claim Free Dessert (Add ₹0 to Order)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- VIP MODAL 2: EXCLUSIVE 50% OFF VIP COUPONS & OFFERS                       -->
+  <!-- ========================================================================= -->
+  <div class="modal-backdrop" id="vipOffersModal" style="display: none;">
+    <div class="vip-offers-card">
+      <button class="modal-close-btn" onclick="closeVipOffersModal()"><i class="fa-solid fa-xmark"></i></button>
+      
+      <div class="vip-modal-header">
+        <div class="vip-pill"><i class="fa-solid fa-percent text-emerald"></i> VIP SECRET OFFERS</div>
+        <h3>Exclusive 50% OFF VIP Drops</h3>
+        <p class="modal-subtitle">Tap 'Apply Coupon' on any offer to automatically apply savings to your basket!</p>
+      </div>
+
+      <div class="vip-offers-list">
+        <!-- Offer 1 -->
+        <div class="vip-offer-ticket">
+          <div class="ticket-left">
+            <span class="ticket-discount">50% OFF</span>
+            <span class="ticket-code">CRAVE50</span>
+          </div>
+          <div class="ticket-middle">
+            <h4>Flat 50% OFF Entire Order</h4>
+            <p>Valid on all 580+ dishes. Max discount ₹150.</p>
+            <span class="ticket-tag">⚡ Most Popular</span>
+          </div>
+          <div class="ticket-right">
+            <button class="btn-apply-ticket" onclick="applyVipOffer('CRAVE50', '50% OFF Entire Order')">
+              Apply Coupon
+            </button>
+          </div>
+        </div>
+
+        <!-- Offer 2 -->
+        <div class="vip-offer-ticket">
+          <div class="ticket-left gold">
+            <span class="ticket-discount">50% OFF</span>
+            <span class="ticket-code">WEEKEND50</span>
+          </div>
+          <div class="ticket-middle">
+            <h4>50% OFF Pizzas & Burgers</h4>
+            <p>Unlimited half-price savings on all artisanal pizzas & smash burgers.</p>
+            <span class="ticket-tag gold">🍕 Chef's Pick</span>
+          </div>
+          <div class="ticket-right">
+            <button class="btn-apply-ticket" onclick="applyVipOffer('WEEKEND50', '50% OFF Pizzas & Burgers')">
+              Apply Coupon
+            </button>
+          </div>
+        </div>
+
+        <!-- Offer 3 -->
+        <div class="vip-offer-ticket">
+          <div class="ticket-left purple">
+            <span class="ticket-discount">₹150 OFF</span>
+            <span class="ticket-code">VIPFEAST</span>
+          </div>
+          <div class="ticket-middle">
+            <h4>Flat ₹150 OFF Feast Bundles</h4>
+            <p>Applicable on all Curated Gourmet Tasting Combos.</p>
+            <span class="ticket-tag purple">👑 VIP Exclusive</span>
+          </div>
+          <div class="ticket-right">
+            <button class="btn-apply-ticket" onclick="applyVipOffer('VIPFEAST', '₹150 OFF Feast Combos')">
+              Apply Coupon
+            </button>
+          </div>
+        </div>
+
+        <!-- Offer 4 -->
+        <div class="vip-offer-ticket">
+          <div class="ticket-left emerald">
+            <span class="ticket-discount">FREE</span>
+            <span class="ticket-code">FREEDEL</span>
+          </div>
+          <div class="ticket-middle">
+            <h4>100% Free Express Delivery</h4>
+            <p>Zero delivery charges with priority 15-min rush dispatch.</p>
+            <span class="ticket-tag emerald">🛵 Unlimited Use</span>
+          </div>
+          <div class="ticket-right">
+            <button class="btn-apply-ticket" onclick="applyVipOffer('FREEDEL', 'Free Delivery')">
+              Apply Coupon
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- VIP MODAL 3: 15-MIN PRIORITY RUSH DISPATCH                                -->
+  <!-- ========================================================================= -->
+  <div class="modal-backdrop" id="priorityRushModal" style="display: none;">
+    <div class="vip-rush-card">
+      <button class="modal-close-btn" onclick="closePriorityRushModal()"><i class="fa-solid fa-xmark"></i></button>
+      
+      <div class="vip-modal-header">
+        <div class="vip-pill"><i class="fa-solid fa-bolt text-primary"></i> 15-MIN PRIORITY RUSH</div>
+        <h3>Lightning-Fast Kitchen Dispatch</h3>
+        <p class="modal-subtitle">How our VIP priority rush protocol delivers fresh hot food in 15 minutes:</p>
+      </div>
+
+      <div class="rush-features-list">
+        <div class="rush-feature-card">
+          <div class="rush-icon">⚡</div>
+          <div class="rush-text">
+            <h4>Instant Chef Priority</h4>
+            <p>Your order bypasses normal queues and prints directly to the Head Chef station.</p>
+          </div>
+        </div>
+        <div class="rush-feature-card">
+          <div class="rush-icon">🛵</div>
+          <div class="rush-text">
+            <h4>Dedicated EV Express Rider</h4>
+            <p>A fast EV delivery partner is pre-assigned within 30 seconds of placing order.</p>
+          </div>
+        </div>
+        <div class="rush-feature-card">
+          <div class="rush-icon">🌡️</div>
+          <div class="rush-text">
+            <h4>Thermal Temperature Lock</h4>
+            <p>Sealed in heated insulated bags so food arrives steaming hot at 65°C.</p>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-activate-rush" onclick="activatePriorityRush()">
+        <i class="fa-solid fa-bolt"></i> Activate 15-Min Priority Rush (Free for VIP)
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 8. BOUTIQUE LUXURY FOOTER                                                 -->
+  <!-- ========================================================================= -->
+  <footer class="main-footer">
+    <div class="footer-container">
+      <div class="footer-top-grid">
+        <div class="footer-brand-col">
+          <div class="footer-logo">
+            <div class="logo-symbol small">
+              <i class="fa-solid fa-fire-flame-curved"></i>
+            </div>
+            <div class="brand-title">CRAVE<span>PULSE</span> <span class="badge-360">360</span></div>
+          </div>
+          <p class="footer-bio">
+            Hyper-fresh handcrafted gourmet food cooked in micro-cloud kitchens and delivered hot to your doorstep in 15 minutes.
+          </p>
+          <div class="footer-badges-strip">
+            <span>🛡️ 100% Contactless</span>
+            <span>📦 Eco-Thermal Box</span>
+            <span>🌱 Farm-Fresh</span>
+          </div>
+        </div>
+
+        <div class="footer-links-col">
+          <h4>Popular Cravings</h4>
+          <ul class="footer-cravings-interactive-list">
+            <li><a href="javascript:void(0)" class="craving-link-item" onclick="openPopularCravingModal('truffle-burger')"><i class="fa-solid fa-burger text-primary"></i> Truffle Smash Burgers <i class="fa-solid fa-arrow-up-right-from-square craving-open-icon"></i></a></li>
+            <li><a href="javascript:void(0)" class="craving-link-item" onclick="openPopularCravingModal('dum-biryani')"><i class="fa-solid fa-bowl-rice text-primary"></i> Dum Handi Biryanis <i class="fa-solid fa-arrow-up-right-from-square craving-open-icon"></i></a></li>
+            <li><a href="javascript:void(0)" class="craving-link-item" onclick="openPopularCravingModal('woodfired-pizza')"><i class="fa-solid fa-pizza-slice text-primary"></i> Woodfired Artisanal Pizzas <i class="fa-solid fa-arrow-up-right-from-square craving-open-icon"></i></a></li>
+            <li><a href="javascript:void(0)" class="craving-link-item" onclick="openPopularCravingModal('belgian-waffle')"><i class="fa-solid fa-stroopwafel text-primary"></i> Belgian Chocolate Waffles <i class="fa-solid fa-arrow-up-right-from-square craving-open-icon"></i></a></li>
+            <li><a href="javascript:void(0)" class="craving-link-item" onclick="openPopularCravingModal('iced-boba')"><i class="fa-solid fa-mug-hot text-primary"></i> Iced Boba & Matcha Shakes <i class="fa-solid fa-arrow-up-right-from-square craving-open-icon"></i></a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <h4>Live Delivery Hubs</h4>
+          <ul class="footer-hubs-interactive-list">
+            <li><a href="javascript:void(0)" class="hub-link-item" onclick="openDeliveryHubModal('tech-park')"><span class="hub-bullet active"></span> Central Tech Park (12 mins) <i class="fa-solid fa-arrow-up-right-from-square hub-open-icon"></i></a></li>
+            <li><a href="javascript:void(0)" class="hub-link-item" onclick="openDeliveryHubModal('north-campus')"><span class="hub-bullet active"></span> University North Campus (15 mins) <i class="fa-solid fa-arrow-up-right-from-square hub-open-icon"></i></a></li>
+            <li><a href="javascript:void(0)" class="hub-link-item" onclick="openDeliveryHubModal('bandra-west')"><span class="hub-bullet active"></span> Bandra West Coastal (18 mins) <i class="fa-solid fa-arrow-up-right-from-square hub-open-icon"></i></a></li>
+            <li><a href="javascript:void(0)" class="hub-link-item" onclick="openDeliveryHubModal('cyber-city')"><span class="hub-bullet active"></span> Cyber City Metro (14 mins) <i class="fa-solid fa-arrow-up-right-from-square hub-open-icon"></i></a></li>
+            <li><a href="javascript:void(0)" class="hub-link-item" onclick="openDeliveryHubModal('south-bay')"><span class="hub-bullet active"></span> South Bay Boulevard (16 mins) <i class="fa-solid fa-arrow-up-right-from-square hub-open-icon"></i></a></li>
+          </ul>
+        </div>
+
+        <div class="footer-newsletter-col">
+          <h4>Get 50% Off First Order</h4>
+          <p>Join 30,000+ food lovers and receive secret weekend secret drops & coupon codes.</p>
+          <div class="newsletter-box">
+            <input type="email" id="newsletterEmailInput" placeholder="Enter your email address...">
+            <button class="btn-newsletter-join" onclick="handleNewsletterJoin()">Join</button>
+          </div>
+          <div class="payment-trust-icons">
+            <button type="button" class="payment-chip-btn" onclick="openPaymentGatewayModal('gpay')" title="Pay via Google Pay"><i class="fa-brands fa-google-pay"></i> GPay</button>
+            <button type="button" class="payment-chip-btn" onclick="openPaymentGatewayModal('cards')" title="Pay with Debit/Credit Card"><i class="fa-solid fa-credit-card"></i> Cards</button>
+            <button type="button" class="payment-chip-btn" onclick="openPaymentGatewayModal('upi')" title="Pay with UPI & QR Scanner"><i class="fa-solid fa-qrcode"></i> UPI</button>
+            <button type="button" class="payment-chip-btn" onclick="openPaymentGatewayModal('cod')" title="Cash on Delivery"><i class="fa-solid fa-money-bill-wave"></i> Cash on Delivery</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom-bar">
+        <div>© 2026 CravePulse 360 Gourmet Foods Inc. All rights reserved.</div>
+        <div class="footer-bottom-links">
+          <span>Hygiene Certificate FSSAI No. 11523091000214</span>
+          <span>•</span>
+          <span>100% Contactless Delivery</span>
+          <span>•</span>
+          <span>Eco-Friendly Sustainable Packaging</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================================= -->
+  <!-- FLOATING WIDGETS: DAILY FORTUNE WHEEL & LIVE ACTIVITY                     -->
+  <!-- ========================================================================= -->
+  
+  <!-- Floating Spin the Wheel Button -->
+  <button class="floating-spin-btn" id="floatingSpinBtn" onclick="openSpinWheelModal()" title="Spin the Wheel to win rewards!">
+    <div class="spin-wheel-mini-icon">🎡</div>
+    <div class="spin-btn-text">
+      <span>SPIN & WIN</span>
+      <small>Daily Fortune Wheel</small>
+    </div>
+  </button>
+
+  <!-- Live Social Proof Activity Card -->
+  <div class="live-activity-toast" id="liveActivityToast" style="display: none;" onclick="handleActivityToastClick()">
+    <div class="activity-toast-avatar" id="actToastAvatar">🍕</div>
+    <div class="activity-toast-info">
+      <div class="act-toast-msg" id="actToastMsg"><strong>Ananya from Bandra</strong> ordered 2x Truffle Smash Burger!</div>
+      <div class="act-toast-time" id="actToastTime">⚡ Just now • 15m Delivery</div>
+    </div>
+    <button class="act-toast-close" onclick="dismissActivityToast(event)"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- DAILY CRAVE FORTUNE WHEEL MODAL                                           -->
+  <!-- ========================================================================= -->
+  <div class="modal-backdrop" id="spinWheelModal" style="display: none;">
+    <div class="spin-wheel-card">
+      <button class="modal-close-btn" onclick="closeSpinWheelModal()" title="Close Wheel"><i class="fa-solid fa-xmark"></i></button>
+
+      <div class="wheel-header-info">
+        <div class="wheel-tag-pill"><i class="fa-solid fa-wand-magic-sparkles"></i> DAILY FORTUNE DROP</div>
+        <h3>Spin the Fortune Wheel!</h3>
+        <p class="modal-subtitle">Spin once every day to win instant discounts, free desserts, or free delivery!</p>
+      </div>
+
+      <!-- Interactive Wheel Stage -->
+      <div class="wheel-stage-container">
+        <!-- Top Pointer / Ticker Needle -->
+        <div class="wheel-pointer-needle">
+          <div class="needle-triangle"></div>
+          <div class="needle-dot"></div>
+        </div>
+
+        <!-- Outer Light-Bulb Ring Frame -->
+        <div class="wheel-outer-ring">
+          <div class="led-bulb b1"></div>
+          <div class="led-bulb b2"></div>
+          <div class="led-bulb b3"></div>
+          <div class="led-bulb b4"></div>
+          <div class="led-bulb b5"></div>
+          <div class="led-bulb b6"></div>
+          <div class="led-bulb b7"></div>
+          <div class="led-bulb b8"></div>
+          <div class="led-bulb b9"></div>
+          <div class="led-bulb b10"></div>
+          <div class="led-bulb b11"></div>
+          <div class="led-bulb b12"></div>
+
+          <!-- Rotating Wheel Canvas / SVG Wrapper -->
+          <div class="wheel-svg-wrapper">
+            <svg id="svgWheelDisc" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="200" height="200">
+              <defs>
+                <linearGradient id="grad-pink" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#FF6B8B"/>
+                  <stop offset="100%" stop-color="#E85A7E"/>
+                </linearGradient>
+                <linearGradient id="grad-gold" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#FDE68A"/>
+                  <stop offset="100%" stop-color="#F59E0B"/>
+                </linearGradient>
+                <linearGradient id="grad-coral" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#FDA4AF"/>
+                  <stop offset="100%" stop-color="#F43F5E"/>
+                </linearGradient>
+                <linearGradient id="grad-emerald" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#6EE7B7"/>
+                  <stop offset="100%" stop-color="#10B981"/>
+                </linearGradient>
+                <linearGradient id="grad-purple" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#D8B4FE"/>
+                  <stop offset="100%" stop-color="#8B5CF6"/>
+                </linearGradient>
+                <linearGradient id="grad-amber" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#FDBA74"/>
+                  <stop offset="100%" stop-color="#D97706"/>
+                </linearGradient>
+                <filter id="hubShadow" x="-30%" y="-30%" width="160%" height="160%">
+                  <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000" flood-opacity="0.25"/>
+                </filter>
+              </defs>
+
+              <!-- 6 Wheel Pie Slices (Center: 200, 200, Radius: 195) -->
+              <path d="M 200 200 L 395 200 A 195 195 0 0 1 297.5 368.87 Z" fill="url(#grad-pink)" stroke="#FFFDF9" stroke-width="2.5"/>
+              <path d="M 200 200 L 297.5 368.87 A 195 195 0 0 1 102.5 368.87 Z" fill="url(#grad-gold)" stroke="#FFFDF9" stroke-width="2.5"/>
+              <path d="M 200 200 L 102.5 368.87 A 195 195 0 0 1 5 200 Z" fill="url(#grad-coral)" stroke="#FFFDF9" stroke-width="2.5"/>
+              <path d="M 200 200 L 5 200 A 195 195 0 0 1 102.5 31.13 Z" fill="url(#grad-emerald)" stroke="#FFFDF9" stroke-width="2.5"/>
+              <path d="M 200 200 L 102.5 31.13 A 195 195 0 0 1 297.5 31.13 Z" fill="url(#grad-amber)" stroke="#FFFDF9" stroke-width="2.5"/>
+              <path d="M 200 200 L 297.5 31.13 A 195 195 0 0 1 395 200 Z" fill="url(#grad-purple)" stroke="#FFFDF9" stroke-width="2.5"/>
+
+              <!-- Sector Labels -->
+              <g transform="rotate(30 200 200)">
+                <text x="305" y="206" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="15" font-weight="800" fill="#FFFFFF" transform="rotate(90 305 206)">🍕 50% OFF</text>
+              </g>
+              <g transform="rotate(90 200 200)">
+                <text x="305" y="206" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="15" font-weight="800" fill="#451A03" transform="rotate(90 305 206)">🍰 Free Treat</text>
+              </g>
+              <g transform="rotate(150 200 200)">
+                <text x="305" y="206" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="15" font-weight="800" fill="#FFFFFF" transform="rotate(90 305 206)">🛵 Free Deliv.</text>
+              </g>
+              <g transform="rotate(210 200 200)">
+                <text x="305" y="206" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="15" font-weight="800" fill="#FFFFFF" transform="rotate(90 305 206)">💰 ₹100 Off</text>
+              </g>
+              <g transform="rotate(270 200 200)">
+                <text x="305" y="206" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="15" font-weight="800" fill="#FFFFFF" transform="rotate(90 305 206)">🍫 Choco Lava</text>
+              </g>
+              <g transform="rotate(330 200 200)">
+                <text x="305" y="206" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="15" font-weight="800" fill="#FFFFFF" transform="rotate(90 305 206)">🎓 20% Stud.</text>
+              </g>
+
+              <!-- Center Hub -->
+              <circle cx="200" cy="200" r="42" fill="#FFFDF9" stroke="#E85A7E" stroke-width="4" filter="url(#hubShadow)"/>
+              <circle cx="200" cy="200" r="32" fill="url(#grad-pink)"/>
+              <text x="200" y="208" text-anchor="middle" font-size="20">🎁</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Spin Action Area -->
+      <div class="wheel-action-area">
+        <button class="btn-spin-now" id="btnSpinWheelAction" onclick="spinFortuneWheel()">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> SPIN THE WHEEL NOW!
+        </button>
+
+        <!-- Winning Result Banner -->
+        <div class="wheel-result-banner" id="wheelResultBanner" style="display: none;">
+          <div class="wheel-result-icon" id="wheelResultIcon">🎉</div>
+          <div class="wheel-result-info">
+            <div class="wheel-result-title" id="wheelResultTitle">You won 50% OFF Entire Order!</div>
+            <div class="wheel-result-sub" id="wheelResultSub">Coupon code <strong>CRAVE50</strong> auto-applied to your basket!</div>
+            <div class="wheel-result-actions">
+              <button class="btn-wheel-order" onclick="closeSpinWheelModal(); scrollToMenu();">
+                <i class="fa-solid fa-utensils"></i> Order Food with Discount
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: WRITE A CUSTOMER REVIEW                                            -->
+  <!-- ========================================================================= -->
+  <div class="modal-backdrop" id="writeReviewModal" style="display: none;" onclick="handleModalBackdropClick(event, 'writeReviewModal')">
+    <div class="write-review-card" onclick="event.stopPropagation()">
+      <button class="modal-close-btn" onclick="closeWriteReviewModal()"><i class="fa-solid fa-xmark"></i></button>
+      
+      <div class="write-review-header">
+        <div class="vip-pill"><i class="fa-solid fa-heart text-primary"></i> AUTHENTIC FOODIE REVIEW</div>
+        <h3>Share Your Dining Experience! 🌟</h3>
+        <p class="modal-subtitle">Tell food lovers across the city about the taste, packaging & delivery speed of your order!</p>
+      </div>
+
+      <form id="customerReviewForm" onsubmit="submitCustomerReview(event)">
+        <div class="form-group-row">
+          <div class="form-field">
+            <label for="reviewAuthorName"><i class="fa-solid fa-user text-primary"></i> Your Name <span class="req">*</span></label>
+            <input type="text" id="reviewAuthorName" placeholder="e.g., Simran Kaur" required maxlength="40">
+          </div>
+          <div class="form-field">
+            <label for="reviewAuthorLocation"><i class="fa-solid fa-location-dot text-emerald"></i> Your City / Area <span class="req">*</span></label>
+            <input type="text" id="reviewAuthorLocation" placeholder="e.g., Bandra West, Mumbai" required maxlength="45">
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="reviewAuthorDish"><i class="fa-solid fa-utensils text-accent"></i> Favorite Dish Ordered <span class="req">*</span></label>
+          <input type="text" id="reviewAuthorDish" placeholder="e.g., Double Truffle Smash Burger + Peri Fries" required maxlength="65">
+        </div>
+
+        <div class="form-field rating-field-group">
+          <label><i class="fa-solid fa-star text-accent"></i> Star Rating <span class="req">*</span></label>
+          <div class="star-rating-picker" id="starRatingPicker">
+            <button type="button" class="star-pick active" data-rating="1" onclick="setFormRating(1)" onmouseenter="previewFormRating(1)" onmouseleave="resetPreviewRating()" title="1 Star - Poor">⭐</button>
+            <button type="button" class="star-pick active" data-rating="2" onclick="setFormRating(2)" onmouseenter="previewFormRating(2)" onmouseleave="resetPreviewRating()" title="2 Stars - Fair">⭐</button>
+            <button type="button" class="star-pick active" data-rating="3" onclick="setFormRating(3)" onmouseenter="previewFormRating(3)" onmouseleave="resetPreviewRating()" title="3 Stars - Good">⭐</button>
+            <button type="button" class="star-pick active" data-rating="4" onclick="setFormRating(4)" onmouseenter="previewFormRating(4)" onmouseleave="resetPreviewRating()" title="4 Stars - Very Good">⭐</button>
+            <button type="button" class="star-pick active" data-rating="5" onclick="setFormRating(5)" onmouseenter="previewFormRating(5)" onmouseleave="resetPreviewRating()" title="5 Stars - Outstanding">⭐</button>
+          </div>
+          <div class="rating-feedback-label" id="ratingFeedbackLabel">⭐⭐⭐⭐⭐ Outstanding & Delicious! 🤤 (5/5)</div>
+        </div>
+
+        <div class="form-field">
+          <label for="reviewAuthorComment"><i class="fa-solid fa-comment-dots text-primary"></i> Your Foodie Review <span class="req">*</span></label>
+          <textarea id="reviewAuthorComment" rows="3" placeholder="Describe the flavors, freshness, temperature, aroma, and unboxing..." required minlength="10" maxlength="350" oninput="updateReviewCharCount(this)"></textarea>
+          <div class="char-count-hint"><span id="reviewCharCount">0</span>/350 characters</div>
+        </div>
+
+        <div class="form-actions-row">
+          <button type="button" class="btn-cancel-review" onclick="closeWriteReviewModal()">Cancel</button>
+          <button type="submit" class="btn-submit-review" id="btnSubmitReview">
+            <i class="fa-solid fa-paper-plane"></i> Publish Live Review
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: LUXURY INTERACTIVE PAYMENT GATEWAY & SCANNER WINDOW                -->
+  <!-- ========================================================================= -->
+  <div class="modal-backdrop" id="paymentGatewayModal" style="display: none;" onclick="handleModalBackdropClick(event, 'paymentGatewayModal')">
+    <div class="payment-gateway-card" onclick="event.stopPropagation()">
+      <button class="modal-close-btn" onclick="closePaymentGatewayModal()"><i class="fa-solid fa-xmark"></i></button>
+
+      <!-- Gateway Header -->
+      <div class="gateway-header">
+        <div class="gateway-security-badge">
+          <i class="fa-solid fa-shield-halved text-emerald"></i>
+          <span>256-BIT SSL ENCRYPTED & RBI COMPLIANT</span>
+        </div>
+        <div class="gateway-title-row">
+          <div>
+            <h3>CravePulse Pay ⚡</h3>
+            <p class="gateway-sub">Fast & secure checkout with instant kitchen dispatch</p>
+          </div>
+          <div class="gateway-amount-box">
+            <span class="pay-label">Total to Pay</span>
+            <span class="pay-amount" id="gatewayPayAmount">₹489</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Payment Method Navigation Tabs -->
+      <div class="payment-tabs-bar">
+        <button class="pay-tab-btn active" id="payTabBtnUpi" onclick="switchPaymentTab('upi')">
+          <i class="fa-solid fa-qrcode"></i>
+          <span>UPI & QR Scanner</span>
+          <span class="tab-hot-tag">Instant</span>
+        </button>
+        <button class="pay-tab-btn" id="payTabBtnGpay" onclick="switchPaymentTab('gpay')">
+          <i class="fa-brands fa-google-pay"></i>
+          <span>Google Pay</span>
+        </button>
+        <button class="pay-tab-btn" id="payTabBtnCards" onclick="switchPaymentTab('cards')">
+          <i class="fa-solid fa-credit-card"></i>
+          <span>Cards</span>
+        </button>
+        <button class="pay-tab-btn" id="payTabBtnCod" onclick="switchPaymentTab('cod')">
+          <i class="fa-solid fa-money-bill-wave"></i>
+          <span>Cash on Del.</span>
+        </button>
+      </div>
+
+      <!-- Gateway Body: Method Views -->
+      <div class="gateway-body">
+        
+        <!-- 1. UPI & QR SCANNER VIEW -->
+        <div class="pay-view-panel" id="payViewUpi">
+          <div class="upi-scanner-layout">
+            
+            <!-- QR Code Scanner Box -->
+            <div class="qr-code-box">
+              <div class="qr-scanner-frame">
+                <!-- Laser Scanning Beam Animation -->
+                <div class="qr-laser-beam"></div>
+
+                <!-- Generated SVG QR Code -->
+                <svg class="qr-svg-graphic" viewBox="0 0 200 200" width="180" height="180">
+                  <rect width="200" height="200" fill="#FFFFFF" rx="12"/>
+                  <!-- Corner Markers Top-Left -->
+                  <rect x="15" y="15" width="45" height="45" fill="#2C2224" rx="6"/>
+                  <rect x="23" y="23" width="29" height="29" fill="#FFFFFF" rx="4"/>
+                  <rect x="29" y="29" width="17" height="17" fill="#E85A7E" rx="2"/>
+                  <!-- Corner Markers Top-Right -->
+                  <rect x="140" y="15" width="45" height="45" fill="#2C2224" rx="6"/>
+                  <rect x="148" y="23" width="29" height="29" fill="#FFFFFF" rx="4"/>
+                  <rect x="154" y="29" width="17" height="17" fill="#E85A7E" rx="2"/>
+                  <!-- Corner Markers Bottom-Left -->
+                  <rect x="15" y="140" width="45" height="45" fill="#2C2224" rx="6"/>
+                  <rect x="23" y="148" width="29" height="29" fill="#FFFFFF" rx="4"/>
+                  <rect x="29" y="154" width="17" height="17" fill="#E85A7E" rx="2"/>
+                  <!-- Matrix Data Dots Grid -->
+                  <rect x="70" y="20" width="8" height="8" fill="#2C2224"/>
+                  <rect x="85" y="20" width="8" height="8" fill="#2C2224"/>
+                  <rect x="100" y="20" width="8" height="8" fill="#2C2224"/>
+                  <rect x="115" y="20" width="8" height="8" fill="#2C2224"/>
+                  <rect x="70" y="35" width="8" height="8" fill="#2C2224"/>
+                  <rect x="100" y="35" width="8" height="8" fill="#2C2224"/>
+                  <rect x="80" y="50" width="8" height="8" fill="#2C2224"/>
+                  <rect x="95" y="50" width="8" height="8" fill="#2C2224"/>
+                  <rect x="110" y="50" width="8" height="8" fill="#2C2224"/>
+                  <rect x="125" y="50" width="8" height="8" fill="#2C2224"/>
+                  <!-- Center CravePulse Logo Hub -->
+                  <circle cx="100" cy="100" r="22" fill="#FAF5EE" stroke="#E85A7E" stroke-width="3"/>
+                  <text x="100" y="106" text-anchor="middle" font-size="14">🍕</text>
+                  <!-- Bottom Matrix Dots -->
+                  <rect x="70" y="145" width="8" height="8" fill="#2C2224"/>
+                  <rect x="85" y="145" width="8" height="8" fill="#2C2224"/>
+                  <rect x="100" y="145" width="8" height="8" fill="#2C2224"/>
+                  <rect x="115" y="145" width="8" height="8" fill="#2C2224"/>
+                  <rect x="140" y="70" width="8" height="8" fill="#2C2224"/>
+                  <rect x="155" y="70" width="8" height="8" fill="#2C2224"/>
+                  <rect x="170" y="70" width="8" height="8" fill="#2C2224"/>
+                  <rect x="140" y="85" width="8" height="8" fill="#2C2224"/>
+                  <rect x="170" y="85" width="8" height="8" fill="#2C2224"/>
+                  <rect x="140" y="100" width="8" height="8" fill="#2C2224"/>
+                  <rect x="155" y="100" width="8" height="8" fill="#2C2224"/>
+                  <rect x="170" y="100" width="8" height="8" fill="#2C2224"/>
+                  <rect x="140" y="115" width="8" height="8" fill="#2C2224"/>
+                  <rect x="170" y="115" width="8" height="8" fill="#2C2224"/>
+                  <rect x="140" y="130" width="8" height="8" fill="#2C2224"/>
+                  <rect x="155" y="130" width="8" height="8" fill="#2C2224"/>
+                  <rect x="170" y="130" width="8" height="8" fill="#2C2224"/>
+                  <rect x="140" y="145" width="8" height="8" fill="#2C2224"/>
+                  <rect x="170" y="145" width="8" height="8" fill="#2C2224"/>
+                  <rect x="140" y="160" width="8" height="8" fill="#2C2224"/>
+                  <rect x="155" y="160" width="8" height="8" fill="#2C2224"/>
+                  <rect x="170" y="160" width="8" height="8" fill="#2C2224"/>
+                  <rect x="140" y="175" width="8" height="8" fill="#2C2224"/>
+                  <rect x="170" y="175" width="8" height="8" fill="#2C2224"/>
+                  <rect x="70" y="70" width="8" height="8" fill="#2C2224"/>
+                  <rect x="85" y="70" width="8" height="8" fill="#2C2224"/>
+                  <rect x="70" y="85" width="8" height="8" fill="#2C2224"/>
+                  <rect x="70" y="160" width="8" height="8" fill="#2C2224"/>
+                  <rect x="85" y="160" width="8" height="8" fill="#2C2224"/>
+                  <rect x="100" y="160" width="8" height="8" fill="#2C2224"/>
+                  <rect x="115" y="160" width="8" height="8" fill="#2C2224"/>
+                  <rect x="70" y="175" width="8" height="8" fill="#2C2224"/>
+                  <rect x="100" y="175" width="8" height="8" fill="#2C2224"/>
+                  <rect x="115" y="175" width="8" height="8" fill="#2C2224"/>
+                  <rect x="20" y="70" width="8" height="8" fill="#2C2224"/>
+                  <rect x="35" y="70" width="8" height="8" fill="#2C2224"/>
+                  <rect x="50" y="70" width="8" height="8" fill="#2C2224"/>
+                  <rect x="20" y="85" width="8" height="8" fill="#2C2224"/>
+                  <rect x="50" y="85" width="8" height="8" fill="#2C2224"/>
+                  <rect x="20" y="100" width="8" height="8" fill="#2C2224"/>
+                  <rect x="35" y="100" width="8" height="8" fill="#2C2224"/>
+                  <rect x="50" y="100" width="8" height="8" fill="#2C2224"/>
+                  <rect x="20" y="115" width="8" height="8" fill="#2C2224"/>
+                  <rect x="50" y="115" width="8" height="8" fill="#2C2224"/>
+                </svg>
+              </div>
+
+              <!-- Countdown Timer -->
+              <div class="qr-timer-pill">
+                <i class="fa-solid fa-stopwatch text-accent"></i>
+                <span>QR valid for: <strong id="qrCountdown">04:59</strong></span>
+              </div>
+            </div>
+
+            <!-- Scanner Instructions & Quick Apps -->
+            <div class="upi-instructions-side">
+              <h4>Scan & Pay with Any UPI App</h4>
+              <p class="upi-sub">Open camera or your favorite UPI App to scan the QR code and pay directly.</p>
+
+              <!-- Supported UPI App Badges -->
+              <div class="upi-apps-row">
+                <div class="upi-app-chip" onclick="simulateAppPay('Google Pay')">
+                  <i class="fa-brands fa-google-pay"></i> GPay
+                </div>
+                <div class="upi-app-chip" onclick="simulateAppPay('PhonePe')">
+                  <span>🟣</span> PhonePe
+                </div>
+                <div class="upi-app-chip" onclick="simulateAppPay('Paytm')">
+                  <span>🔵</span> Paytm
+                </div>
+                <div class="upi-app-chip" onclick="simulateAppPay('CRED')">
+                  <span>⚪</span> CRED
+                </div>
+              </div>
+
+              <!-- UPI ID Copy Row -->
+              <div class="upi-id-copy-row">
+                <div class="upi-id-display">
+                  <span class="upi-id-label">Merchant VPA:</span>
+                  <strong id="merchantVpaText">cravepulse.food@okhdfcbank</strong>
+                </div>
+                <button type="button" class="btn-copy-vpa" onclick="copyMerchantVpa()">
+                  <i class="fa-solid fa-copy"></i> Copy
+                </button>
+              </div>
+
+              <!-- Custom Customer UPI ID Input Row -->
+              <div class="custom-upi-pay-box">
+                <label for="customCustomerUpiInput" class="custom-upi-title"><i class="fa-solid fa-mobile-screen-button text-primary"></i> Or Enter Your Own UPI ID:</label>
+                <div class="custom-upi-row">
+                  <input type="text" id="customCustomerUpiInput" placeholder="e.g. rahul@okhdfcbank">
+                  <button type="button" class="btn-verify-upi" onclick="handleCustomUpiPay()">
+                    <i class="fa-solid fa-bolt"></i> Request
+                  </button>
+                </div>
+              </div>
+
+              <!-- Simulate QR Scan Action -->
+              <button class="btn-authorize-pay" onclick="executePayment('UPI QR Scanner', 'cravepulse.food@okhdfcbank')">
+                <i class="fa-solid fa-camera"></i> Simulate Scan & Complete Payment
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. GPAY INSTANT VIEW -->
+        <div class="pay-view-panel" id="payViewGpay" style="display: none;">
+          <div class="gpay-pane-content">
+            <div class="gpay-brand-header">
+              <div class="gpay-logo-badge"><i class="fa-brands fa-google-pay"></i> Google Pay</div>
+              <span class="gpay-instant-tag">⚡ 1-Click Fast Auth</span>
+            </div>
+
+            <!-- Live Account Mirror Preview -->
+            <div class="gpay-account-box">
+              <div class="gpay-user-avatar" id="gpayAvatarIcon">👤</div>
+              <div class="gpay-user-info">
+                <strong id="gpayAccountNameDisplay">Enter Your Name Below</strong>
+                <span id="gpayUpiDisplay">yourname@okhdfcbank • Ready to Pay</span>
+              </div>
+              <div class="gpay-check-icon"><i class="fa-solid fa-circle-check text-emerald"></i></div>
+            </div>
+
+            <!-- Customer Credentials Input Form -->
+            <form id="gpayCredentialsForm" onsubmit="handleGpaySubmit(event)">
+              <div class="form-group-row">
+                <div class="form-field">
+                  <label for="gpayNameInput"><i class="fa-solid fa-user text-primary"></i> Your Full Name <span class="req">*</span></label>
+                  <input type="text" id="gpayNameInput" placeholder="e.g. Rahul Sharma" required oninput="updateGpayCredentials()">
+                </div>
+                <div class="form-field">
+                  <label for="gpayPhoneInput"><i class="fa-solid fa-phone text-emerald"></i> Mobile Number <span class="req">*</span></label>
+                  <input type="tel" id="gpayPhoneInput" placeholder="e.g. 9876543210" maxlength="10" required oninput="updateGpayCredentials()">
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label for="gpayUpiInput"><i class="fa-brands fa-google-pay text-primary"></i> GPay UPI ID / VPA <span class="req">*</span></label>
+                <input type="text" id="gpayUpiInput" placeholder="e.g. rahul.sharma@okhdfcbank" required oninput="updateGpayCredentials()">
+                <div class="available-promos-pills" style="margin-top: 6px;">
+                  <span class="avail-promo" onclick="setGpayHandle('@okhdfcbank')">@okhdfcbank</span>
+                  <span class="avail-promo" onclick="setGpayHandle('@oksbi')">@oksbi</span>
+                  <span class="avail-promo" onclick="setGpayHandle('@okicici')">@okicici</span>
+                  <span class="avail-promo" onclick="setGpayHandle('@okaxis')">@okaxis</span>
+                </div>
+              </div>
+
+              <div class="gpay-bill-summary">
+                <div class="gpay-bill-row">
+                  <span>Merchant:</span>
+                  <strong>CravePulse Gourmet Kitchens</strong>
+                </div>
+                <div class="gpay-bill-row total">
+                  <span>Total to Pay:</span>
+                  <strong id="gpayAmountDisplay">₹489</strong>
+                </div>
+              </div>
+
+              <button type="submit" class="btn-gpay-action">
+                <i class="fa-brands fa-google"></i> Pay <span id="btnGpayAmount">₹489</span> with Google Pay
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- 3. CREDIT / DEBIT CARDS VIEW -->
+        <div class="pay-view-panel" id="payViewCards" style="display: none;">
+          <div class="cards-pane-content">
+            <!-- 3D Interactive Virtual Card Preview -->
+            <div class="virtual-card-preview" id="virtualCardPreview">
+              <div class="vcard-chip-row">
+                <div class="vcard-chip"></div>
+                <div class="vcard-contactless"><i class="fa-solid fa-wifi"></i></div>
+                <div class="vcard-brand" id="vcardBrandLogo">VISA</div>
+              </div>
+              <div class="vcard-number" id="vcardNumberDisplay">•••• •••• •••• 4242</div>
+              <div class="vcard-bottom-row">
+                <div class="vcard-holder">
+                  <span class="vcard-lbl">CARD HOLDER</span>
+                  <strong id="vcardHolderDisplay">FOOD LOVER</strong>
+                </div>
+                <div class="vcard-expires">
+                  <span class="vcard-lbl">EXPIRES</span>
+                  <strong id="vcardExpiryDisplay">08/28</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Input Form -->
+            <form id="cardPaymentForm" onsubmit="handleCardFormSubmit(event)">
+              <div class="form-field">
+                <label for="cardNumberInput"><i class="fa-solid fa-credit-card text-primary"></i> Card Number</label>
+                <input type="text" id="cardNumberInput" placeholder="4532 8901 2345 6789" maxlength="19" required oninput="formatCardNumber(this)">
+              </div>
+              <div class="form-field">
+                <label for="cardHolderInput"><i class="fa-solid fa-user text-primary"></i> Name on Card</label>
+                <input type="text" id="cardHolderInput" placeholder="e.g. Rahul Sharma" required oninput="updateCardHolder(this)">
+              </div>
+              <div class="form-group-row">
+                <div class="form-field">
+                  <label for="cardExpiryInput"><i class="fa-solid fa-calendar text-accent"></i> Expiry (MM/YY)</label>
+                  <input type="text" id="cardExpiryInput" placeholder="MM/YY" maxlength="5" required oninput="formatCardExpiry(this)">
+                </div>
+                <div class="form-field">
+                  <label for="cardCvvInput"><i class="fa-solid fa-lock text-emerald"></i> CVV</label>
+                  <input type="password" id="cardCvvInput" placeholder="123" maxlength="4" required>
+                </div>
+              </div>
+
+              <button type="submit" class="btn-authorize-pay">
+                <i class="fa-solid fa-lock"></i> Pay <span id="btnCardAmount">₹489</span> Securely
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- 4. CASH ON DELIVERY (COD) VIEW -->
+        <div class="pay-view-panel" id="payViewCod" style="display: none;">
+          <div class="cod-pane-content">
+            <div class="cod-icon-hero">💵</div>
+            <h4>Pay with Cash on Delivery</h4>
+            <p class="cod-desc">Pay safely at your doorstep in cash or UPI QR with our delivery executive upon arrival.</p>
+
+            <form id="codDetailsForm" onsubmit="handleCodSubmit(event)" style="width: 100%;">
+              <div class="form-group-row" style="width: 100%; margin-top: 6px;">
+                <div class="form-field" style="text-align: left;">
+                  <label for="codNameInput"><i class="fa-solid fa-user text-primary"></i> Recipient Name <span class="req">*</span></label>
+                  <input type="text" id="codNameInput" placeholder="e.g. Rahul Sharma" required>
+                </div>
+                <div class="form-field" style="text-align: left;">
+                  <label for="codPhoneInput"><i class="fa-solid fa-phone text-emerald"></i> Contact Number <span class="req">*</span></label>
+                  <input type="tel" id="codPhoneInput" placeholder="e.g. 9876543210" maxlength="10" required>
+                </div>
+              </div>
+
+              <div class="form-field" style="width: 100%; text-align: left; margin-top: 8px;">
+                <label for="codDeliveryNote"><i class="fa-solid fa-house-chimney text-accent"></i> Delivery Instructions / Flat No.</label>
+                <input type="text" id="codDeliveryNote" placeholder="e.g. Flat 402, Ring bell on arrival">
+              </div>
+
+              <div class="cod-perks-box" style="margin-top: 12px;">
+                <div class="cod-perk-item">
+                  <i class="fa-solid fa-circle-check text-emerald"></i>
+                  <span>₹0 Extra Fee • Guaranteed Free COD</span>
+                </div>
+                <div class="cod-perk-item">
+                  <i class="fa-solid fa-shield-halved text-emerald"></i>
+                  <span>Sealed tamper-proof food packaging</span>
+                </div>
+                <div class="cod-perk-item">
+                  <i class="fa-solid fa-hand-holding-dollar text-accent"></i>
+                  <span>Exact change or digital UPI scan on delivery</span>
+                </div>
+              </div>
+
+              <div class="cod-contactless-option" style="margin: 10px 0;">
+                <label class="cod-checkbox-label">
+                  <input type="checkbox" id="contactlessDeliveryCheck" checked>
+                  <span>Request Contactless Delivery (Leave at doorstep & ring bell)</span>
+                </label>
+              </div>
+
+              <button type="submit" class="btn-authorize-pay">
+                <i class="fa-solid fa-bag-shopping"></i> Confirm Cash on Delivery Order
+              </button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Gateway Footer Trust Badges -->
+      <div class="gateway-footer">
+        <div class="gateway-trust-pills">
+          <span><i class="fa-solid fa-shield-check text-emerald"></i> 100% Refund Protection</span>
+          <span>•</span>
+          <span><i class="fa-solid fa-bolt text-accent"></i> Instant Confirmation</span>
+          <span>•</span>
+          <span><i class="fa-solid fa-kitchen-set text-primary"></i> Live KDS Kitchen Sync</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: LIVE DELIVERY HUB & CLOUD KITCHEN SHOWCASE (COMPACT SPLIT)          -->
+  <!-- ========================================================================= -->
+  <div class="modal-backdrop" id="deliveryHubModal" style="display: none;" onclick="handleModalBackdropClick(event, 'deliveryHubModal')">
+    <div class="delivery-hub-card" onclick="event.stopPropagation()">
+      <button class="modal-close-btn" onclick="closeDeliveryHubModal()"><i class="fa-solid fa-xmark"></i></button>
+
+      <!-- Top Nav: Pill + Tabs -->
+      <div class="hub-top-nav">
+        <div class="vip-pill-mini"><i class="fa-solid fa-kitchen-set text-primary"></i> LIVE DELIVERY HUB</div>
+        <div class="hub-switcher-tabs" id="hubSwitcherTabs">
+          <button class="hub-tab-chip active" id="hubTabBtn_tech-park" onclick="switchHubView('tech-park')">🏢 Tech Park (12m)</button>
+          <button class="hub-tab-chip" id="hubTabBtn_north-campus" onclick="switchHubView('north-campus')">🎓 North Campus (15m)</button>
+          <button class="hub-tab-chip" id="hubTabBtn_bandra-west" onclick="switchHubView('bandra-west')">🌊 Bandra West (18m)</button>
+          <button class="hub-tab-chip" id="hubTabBtn_cyber-city" onclick="switchHubView('cyber-city')">🚇 Cyber City (14m)</button>
+          <button class="hub-tab-chip" id="hubTabBtn_south-bay" onclick="switchHubView('south-bay')">🏖️ South Bay (16m)</button>
+        </div>
+      </div>
+
+      <!-- Hub Content Container -->
+      <div class="hub-split-body" id="hubDetailsBody">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: POPULAR CRAVING SHOWCASE, REAL PICS & DIRECT ORDER (COMPACT SPLIT)  -->
+  <!-- ========================================================================= -->
+  <div class="modal-backdrop" id="popularCravingModal" style="display: none;" onclick="handleModalBackdropClick(event, 'popularCravingModal')">
+    <div class="craving-showcase-card" onclick="event.stopPropagation()">
+      <button class="modal-close-btn" onclick="closePopularCravingModal()"><i class="fa-solid fa-xmark"></i></button>
+
+      <!-- Top Nav: Pill + Tabs -->
+      <div class="craving-top-nav">
+        <div class="vip-pill-mini"><i class="fa-solid fa-fire text-primary"></i> CHEF CRAVING</div>
+        <div class="craving-switcher-tabs" id="cravingSwitcherTabs">
+          <button class="craving-tab-chip active" id="cravingTabBtn_truffle-burger" onclick="switchCravingView('truffle-burger')">🍔 Burger</button>
+          <button class="craving-tab-chip" id="cravingTabBtn_dum-biryani" onclick="switchCravingView('dum-biryani')">🍲 Biryani</button>
+          <button class="craving-tab-chip" id="cravingTabBtn_woodfired-pizza" onclick="switchCravingView('woodfired-pizza')">🍕 Pizza</button>
+          <button class="craving-tab-chip" id="cravingTabBtn_belgian-waffle" onclick="switchCravingView('belgian-waffle')">🧇 Waffle</button>
+          <button class="craving-tab-chip" id="cravingTabBtn_iced-boba" onclick="switchCravingView('iced-boba')">🧋 Boba</button>
+        </div>
+      </div>
+
+      <!-- Craving Split Body -->
+      <div class="craving-split-body" id="cravingDetailsBody">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: UNIVERSAL FOOD & DISH VARIETY EXPLORER (15+ REAL VARIATIONS)        -->
+  <!-- ========================================================================= -->
+  <div class="modal-backdrop" id="dishExplorerModal" style="display: none;" onclick="handleModalBackdropClick(event, 'dishExplorerModal')">
+    <div class="dish-explorer-card" onclick="event.stopPropagation()">
+      <button class="modal-close-btn" onclick="closeDishExplorerModal()" title="Close Explorer"><i class="fa-solid fa-xmark"></i></button>
+
+      <!-- Explorer Header -->
+      <div class="explorer-header">
+        <div class="explorer-header-left">
+          <div class="explorer-category-badge" id="explorerCategoryBadge">🍵 ICED MATCHA CRAVINGS</div>
+          <h2 class="explorer-main-title" id="explorerMainTitle">Artisanal Selection — 30+ Variations</h2>
+          <p class="explorer-subtitle" id="explorerSubtitle">Explore chef-crafted variations with verified foodie ratings, authentic photos, reviews & 1-click instant ordering!</p>
+        </div>
+
+        <!-- Filter Chips inside modal -->
+        <div class="explorer-header-right">
+          <div class="explorer-filter-pills" id="explorerFilterPills">
+            <button class="exp-filter-chip active" id="expPillAll" onclick="filterExplorerItems('all', this)">All Options (<span id="expCountAll">48</span>)</button>
+            <button class="exp-filter-chip" id="expPillVeg" onclick="filterExplorerItems('veg', this)">🌱 Veg (<span id="expCountVeg">24</span>)</button>
+            <button class="exp-filter-chip" id="expPillNonVeg" onclick="filterExplorerItems('non-veg', this)">🍗 Non-Veg (<span id="expCountNonVeg">24</span>)</button>
+            <button class="exp-filter-chip" id="expPillBestseller" onclick="filterExplorerItems('bestseller', this)">⭐ Bestsellers (<span id="expCountBest">16</span>)</button>
+            <button class="exp-filter-chip" id="expPillBudget" onclick="filterExplorerItems('under299', this)">💰 Under ₹299 (<span id="expCountBudget">20</span>)</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Explorer Main Scroll Body -->
+      <div class="explorer-scroll-body">
+        
+        <!-- 1. SPOTLIGHT SHOWCASE SECTION (Featured Dish with Full Details, Reviews & Order) -->
+        <div class="explorer-spotlight-box" id="explorerSpotlightBox">
+          <!-- Rendered dynamically by app.js -->
+        </div>
+
+        <!-- 2. VARIETY CATALOG GRID (All 30+ Distinct Variations) -->
+        <div class="explorer-varieties-section">
+          <div class="varieties-section-header">
+            <div class="varieties-title-row">
+              <h3 id="varietiesSectionTitle"><i class="fa-solid fa-layer-group text-primary"></i> 30 Handcrafted Variations Available</h3>
+              <span class="varieties-counter-tag" id="varietiesCounterTag">30 Options Ready to Order</span>
+            </div>
+            <p class="varieties-sub">Click any item below to inspect details in spotlight or add directly to your feast!</p>
+          </div>
+
+          <div class="explorer-varieties-grid" id="explorerVarietiesGrid">
+            <!-- 30+ Cards rendered dynamically by app.js -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Explorer Footer Bar -->
+      <div class="explorer-footer-bar">
+        <div class="explorer-footer-trust">
+          <span>🛡️ 100% Contactless Thermal Delivery</span>
+          <span>•</span>
+          <span>⚡ 15-Minute Kitchen Dispatch</span>
+          <span>•</span>
+          <span>⭐ 4.95+ Avg Foodie Satisfaction</span>
+        </div>
+        <div class="explorer-footer-actions">
+          <button class="btn-exp-close" onclick="closeDishExplorerModal()">Back to Menu</button>
+          <button class="btn-exp-view-cart" onclick="closeDishExplorerModal(); toggleCartDrawer(true);">
+            <i class="fa-solid fa-basket-shopping"></i> View Basket (<span id="expCartCount">0</span>)
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: OWNER & KITCHEN STAFF AUTHENTICATION PORTAL                         -->
+  <!-- ========================================================================= -->
+  <div class="modal-backdrop" id="ownerLoginModal" style="display: none;" onclick="handleModalBackdropClick(event, 'ownerLoginModal')">
+    <div class="owner-login-card" onclick="event.stopPropagation()">
+      <button class="modal-close-btn" onclick="closeOwnerLoginModal()" title="Cancel & Return to Customer Menu"><i class="fa-solid fa-xmark"></i></button>
+
+      <div class="owner-login-header">
+        <div class="owner-icon-badge">
+          <i class="fa-solid fa-kitchen-set"></i>
+        </div>
+        <h2>Kitchen Display & Owner Portal</h2>
+        <p class="owner-login-subtitle">🔒 Restricted Area — Only Restaurant Owners & Kitchen Staff are authorized to log in.</p>
+      </div>
+
+      <!-- Quick Auth Modes -->
+      <div class="owner-login-tabs">
+        <button type="button" class="owner-tab-btn active" id="ownerTabPinBtn" onclick="switchOwnerAuthTab('pin')">
+          <i class="fa-solid fa-key"></i> Quick PIN Keypad
+        </button>
+        <button type="button" class="owner-tab-btn" id="ownerTabPassBtn" onclick="switchOwnerAuthTab('password')">
+          <i class="fa-solid fa-shield-halved"></i> Owner Password
+        </button>
+      </div>
+
+      <!-- Tab 1: PIN Pad -->
+      <div class="owner-auth-panel" id="ownerAuthPinPanel">
+        <div class="pin-display-wrapper">
+          <label class="pin-prompt-label">Enter 4-Digit Master Kitchen PIN:</label>
+          <div class="pin-dots-row" id="pinDotsRow">
+            <span class="pin-dot" id="pinDot0"></span>
+            <span class="pin-dot" id="pinDot1"></span>
+            <span class="pin-dot" id="pinDot2"></span>
+            <span class="pin-dot" id="pinDot3"></span>
+          </div>
+          <div class="pin-hint-tag">🔑 Default Master Kitchen PIN: <strong>8899</strong> (or <strong>1234</strong>)</div>
+          <div class="pin-error-msg" id="pinErrorMessage" style="display: none;">
+            <i class="fa-solid fa-circle-exclamation"></i> Incorrect PIN. Please enter <strong>8899</strong>.
+          </div>
+        </div>
+
+        <div class="pin-keypad-grid">
+          <button type="button" class="pin-key-btn" onclick="enterPinDigit('1')">1</button>
+          <button type="button" class="pin-key-btn" onclick="enterPinDigit('2')">2</button>
+          <button type="button" class="pin-key-btn" onclick="enterPinDigit('3')">3</button>
+          <button type="button" class="pin-key-btn" onclick="enterPinDigit('4')">4</button>
+          <button type="button" class="pin-key-btn" onclick="enterPinDigit('5')">5</button>
+          <button type="button" class="pin-key-btn" onclick="enterPinDigit('6')">6</button>
+          <button type="button" class="pin-key-btn" onclick="enterPinDigit('7')">7</button>
+          <button type="button" class="pin-key-btn" onclick="enterPinDigit('8')">8</button>
+          <button type="button" class="pin-key-btn" onclick="enterPinDigit('9')">9</button>
+          <button type="button" class="pin-key-btn pin-action-clear" onclick="deletePinDigit()" title="Delete single digit">⌫</button>
+          <button type="button" class="pin-key-btn" onclick="enterPinDigit('0')">0</button>
+          <button type="button" class="pin-key-btn pin-action-enter" onclick="submitPinLogin()" title="Submit PIN">✓</button>
+        </div>
+      </div>
+
+      <!-- Tab 2: Password Login -->
+      <form class="owner-auth-panel" id="ownerAuthPassPanel" style="display: none;" onsubmit="submitPasswordLogin(event)">
+        <div class="auth-input-group">
+          <label><i class="fa-solid fa-user-tie"></i> Owner Username / Email</label>
+          <input type="text" id="ownerUsernameInput" class="auth-text-input" value="owner@cravepulse.com" placeholder="owner@cravepulse.com" required>
+        </div>
+        <div class="auth-input-group">
+          <label><i class="fa-solid fa-lock"></i> Kitchen Access Password</label>
+          <input type="password" id="ownerPasswordInput" class="auth-text-input" placeholder="Enter owner password (chef123)" required>
+          <div class="pin-hint-tag" style="margin-top: 6px;">🔑 Master Password: <strong>chef123</strong> or <strong>owner123</strong></div>
+        </div>
+        <div class="pin-error-msg" id="passErrorMessage" style="display: none;">
+          <i class="fa-solid fa-circle-exclamation"></i> Invalid password. Use <strong>chef123</strong> or 1-Click Demo Login.
+        </div>
+        <button type="submit" class="btn-owner-auth-submit">
+          <i class="fa-solid fa-right-to-bracket"></i> Verify & Open Kitchen View
+        </button>
+      </form>
+
+      <!-- Instant 1-Click Demo Button for effortless testing -->
+      <div class="owner-login-footer">
+        <div class="divider-text"><span>OR QUICK VERIFICATION</span></div>
+        <button type="button" class="btn-quick-staff-login" onclick="quickStaffLogin()">
+          <i class="fa-solid fa-bolt-lightning text-warning"></i> 1-Click Instant Owner & Staff Login
+        </button>
+        <button type="button" class="btn-cancel-owner-login" onclick="closeOwnerLoginModal()">
+          ← Return to Customer Food Menu
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: DIL KI CRAVING & FOOD MOOD MATCHER                                 -->
+  <!-- ========================================================================= -->
+  <div class="modal-backdrop" id="mlMoodRecommenderModal" style="display: none;" onclick="handleModalBackdropClick(event, 'mlMoodRecommenderModal')">
+    <div class="ml-modal-card" onclick="event.stopPropagation()">
+      <button class="modal-close-btn" onclick="closeMlMoodModal()" title="Close"><i class="fa-solid fa-xmark"></i></button>
+
+      <!-- Modal Header -->
+      <div class="ml-modal-header">
+        <div class="ml-tech-badge">
+          <i class="fa-solid fa-heart text-danger"></i> FOOD MOOD & CRAVING MATCHER
+        </div>
+        <h2 class="ml-modal-title"><i class="fa-solid fa-face-smile text-primary"></i> ✨ Food Mood Matcher</h2>
+        <p class="ml-modal-subtitle">Tell us how you feel, what you crave, or your current vibe — we'll find your perfect meal instantly!</p>
+      </div>
+
+      <!-- Live Input & Presets -->
+      <div class="ml-mood-input-container">
+        <div class="ml-search-bar-wrap">
+          <i class="fa-solid fa-face-smile text-primary"></i>
+          <input type="text" id="mlMoodInput" class="ml-mood-text-input" placeholder="e.g. Bad day need chocolate, rainy day pizza, post-workout protein, late night study..." onkeydown="handleMlMoodKeyDown(event)" autocomplete="off">
+          <button class="btn-run-ml-recommender" onclick="executeMlMoodMatching()">
+            <i class="fa-solid fa-magnifying-glass"></i> Find Food
+          </button>
+        </div>
+
+        <!-- Quick Mood Preset Chips -->
+        <div class="ml-presets-cloud">
+          <span class="preset-cloud-label"><i class="fa-solid fa-tags"></i> Quick Cravings:</span>
+          <button type="button" class="ml-mood-preset-chip" onclick="setMlMoodQuery('Rainy cozy evening craving something spicy, cheesy and piping hot', this)">🌧️ Rainy Day Pizza</button>
+          <button type="button" class="ml-mood-preset-chip" onclick="setMlMoodQuery('Post-workout high protein low carb healthy fuel meal with grilled chicken or paneer', this)">💪 High Protein Fitness Meal</button>
+          <button type="button" class="ml-mood-preset-chip" onclick="setMlMoodQuery('Late night study session sweet treat with chocolate and rich coffee', this)">🌙 Late Night Coffee & Treat</button>
+          <button type="button" class="ml-mood-preset-chip" onclick="setMlMoodQuery('Craving sweet comfort food for period cramps with molten chocolate and waffles', this)">🍫 Sweet Waffles & Comfort</button>
+          <button type="button" class="ml-mood-preset-chip" onclick="setMlMoodQuery('Feeling sad in a bad mood needing dopamine boost comfort burgers and lava cake', this)">💔 Comfort Burgers & Cake</button>
+          <button type="button" class="ml-mood-preset-chip" onclick="setMlMoodQuery('Party celebration with friends crispy loaded burgers, fries and pizza', this)">🎉 Friends Party Feast</button>
+          <button type="button" class="ml-mood-preset-chip" onclick="setMlMoodQuery('Refreshing light artisanal salad with organic crunch and citrus notes', this)">🥗 Fresh Salad & Detox</button>
+          <button type="button" class="ml-mood-preset-chip" onclick="setMlMoodQuery('Extra spicy aromatic Dum Biryani with caramelized onions and raita', this)">🔥 Spicy Dum Biryani</button>
+        </div>
+      </div>
+
+      <!-- Tech Details (Collapsible) -->
+      <div class="ml-math-inspector-section">
+        <div class="ml-inspector-header" onclick="toggleMlMathInspector()">
+          <div class="inspector-title">
+            <i class="fa-solid fa-circle-info text-warning"></i>
+            <span>How does this matching work? (Details)</span>
+          </div>
+          <span class="inspector-toggle-btn" id="mlMathToggleLabel">Show Details ▼</span>
+        </div>
+        <div class="ml-math-details-body" id="mlMathDetailsBody" style="display: none;">
+          <div class="ml-formula-box">
+            <code>Your mood description and keywords are analyzed against our 580+ dish flavor profiles to find your top culinary matches!</code>
+          </div>
+          <div class="ml-extracted-tokens-row" id="mlExtractedTokensRow">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Recommended Matches Grid -->
+      <div class="ml-results-wrapper">
+        <div class="ml-results-header-row">
+          <h3 id="mlResultsCountHeader"><i class="fa-solid fa-list-check text-primary"></i> Top Recommended Dishes For Your Mood</h3>
+          <span class="ml-algo-tag">Best Match Score</span>
+        </div>
+        <div class="ml-recommendations-grid" id="mlRecommendationsGrid">
+          <!-- Populated dynamically by app.js -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: PHOTO FOOD & CALORIE SCANNER                                       -->
+  <!-- ========================================================================= -->
+  <div class="modal-backdrop" id="mlPhotoScannerModal" style="display: none;" onclick="handleModalBackdropClick(event, 'mlPhotoScannerModal')">
+    <div class="ml-modal-card photo-scanner-card" onclick="event.stopPropagation()">
+      <button class="modal-close-btn" onclick="closeMlPhotoModal()" title="Close"><i class="fa-solid fa-xmark"></i></button>
+
+      <!-- Modal Header -->
+      <div class="ml-modal-header">
+        <div class="ml-tech-badge">
+          <i class="fa-solid fa-camera"></i> SCAN FOOD & ORDER
+        </div>
+        <h2 class="ml-modal-title"><i class="fa-solid fa-camera text-primary"></i> 📸 Food Photo & Calorie Scanner</h2>
+        <p class="ml-modal-subtitle">Upload or scan any dish photo to detect ingredients, calories, nutrition, and order directly!</p>
+      </div>
+
+      <!-- Sample Test Dishes -->
+      <div class="scanner-samples-bar">
+        <span class="scanner-samples-label"><i class="fa-solid fa-hand-pointer"></i> Try sample dishes:</span>
+        <div class="sample-photos-row">
+          <button type="button" class="sample-photo-btn active" id="sampleBtnPizza" onclick="scanSampleFoodPhoto('pizza', this)">🍕 Cheesy Pizza</button>
+          <button type="button" class="sample-photo-btn" id="sampleBtnBurger" onclick="scanSampleFoodPhoto('burger', this)">🍔 Juicy Burger</button>
+          <button type="button" class="sample-photo-btn" id="sampleBtnBiryani" onclick="scanSampleFoodPhoto('biryani', this)">🍛 Dum Biryani</button>
+          <button type="button" class="sample-photo-btn" id="sampleBtnWaffle" onclick="scanSampleFoodPhoto('waffle', this)">🧇 Nutella Waffle</button>
+          <button type="button" class="sample-photo-btn" id="sampleBtnMatcha" onclick="scanSampleFoodPhoto('matcha', this)">🍵 Iced Matcha</button>
+          <button type="button" class="sample-photo-btn" id="sampleBtnLavacake" onclick="scanSampleFoodPhoto('lavacake', this)">🍫 Molten Lava Cake</button>
+        </div>
+      </div>
+
+      <!-- Main Scanner Workspace (2 Columns) -->
+      <div class="scanner-workspace-grid">
+        
+        <!-- Left: Upload Canvas & Laser Scanner -->
+        <div class="scanner-left-panel">
+          <div class="scanner-viewport-box" id="scannerViewportBox">
+            <img id="scannedImagePreview" src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&auto=format&fit=crop&q=80" alt="Scanned Food" crossorigin="anonymous">
+            <canvas id="scannerAnalysisCanvas" width="256" height="256" style="display:none;"></canvas>
+            <div class="scanner-laser-line" id="scannerLaserLine"></div>
+            <div class="scanner-status-overlay" id="scannerStatusOverlay" style="display:none;">
+              <i class="fa-solid fa-spinner fa-spin"></i> Scanning dish photo...
+            </div>
+          </div>
+
+          <!-- File Upload Dropzone -->
+          <div class="scanner-upload-controls">
+            <label class="scanner-upload-btn">
+              <i class="fa-solid fa-cloud-arrow-up"></i> Upload Your Food Photo
+              <input type="file" id="userPhotoFileInput" accept="image/*" onchange="handleUserPhotoUpload(event)" style="display:none;">
+            </label>
+            <span class="upload-note">JPG, PNG supported • 100% Private & Instant</span>
+          </div>
+        </div>
+
+        <!-- Right: Classification Results & Food Clues -->
+        <div class="scanner-right-panel">
+          
+          <!-- Top Classification Card -->
+          <div class="ml-classification-result-card" id="mlClassificationResultCard">
+            <!-- Populated dynamically by app.js -->
+          </div>
+
+          <!-- Real-Time Food Recognition Clues -->
+          <div class="ml-feature-telemetry-box">
+            <div class="telemetry-title-row">
+              <h4><i class="fa-solid fa-eye text-primary"></i> Detected Food Clues</h4>
+              <span class="telemetry-model-tag">Verified Clues</span>
+            </div>
+            
+            <div class="feature-meters-grid">
+              <!-- Injected dynamically via JS -->
+            </div>
+
+            <!-- Matching Dishes Breakdown -->
+            <div class="softmax-probs-container">
+              <span class="softmax-heading">🍽️ Matching Delicious Dishes:</span>
+              <div class="softmax-prob-bars" id="softmaxProbBars">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- JavaScript -->
+  <script src="app.js?v=21.0"></script>
+</body>
+</html>
